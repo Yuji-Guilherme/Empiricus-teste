@@ -1,5 +1,6 @@
 import 'package:empiricus_test/core/di/service_locator.dart';
 import 'package:empiricus_test/core/routes/app_router.dart';
+import 'package:empiricus_test/core/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -17,10 +18,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       title: 'Empiricus',
-      theme: ThemeData(
-        colorScheme: .fromSeed(seedColor: Colors.blue),
-        useMaterial3: true,
-      ),
+      theme: AppTheme.lightTheme,
       debugShowCheckedModeBanner: false,
       routerConfig: AppRouter.router,
     );

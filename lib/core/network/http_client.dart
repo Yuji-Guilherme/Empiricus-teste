@@ -30,8 +30,6 @@ class HttpClientImplementation implements IHttpClient {
     if (response.statusCode == 200) {
       if (response.body.isEmpty) return null;
       return jsonDecode(response.body);
-    } else if (response.statusCode == 401) {
-      throw Exception('Não autorizado');
     } else {
       throw Exception('Erro na requisição: Código ${response.statusCode}');
     }
