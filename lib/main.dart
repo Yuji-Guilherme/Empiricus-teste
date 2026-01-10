@@ -1,12 +1,14 @@
 import 'package:empiricus_test/core/di/service_locator.dart';
 import 'package:empiricus_test/core/routes/app_router.dart';
+import 'package:empiricus_test/core/services/auth_service.dart';
 import 'package:empiricus_test/core/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   setupServiceLocator();
+  await sl<AuthService>().checkLoginStatus();
 
   runApp(const MyApp());
 }
