@@ -1,4 +1,4 @@
-import 'package:empiricus_test/core/theme/app_colors.dart';
+import 'package:empiricus_test/core/theme/app_typography.dart';
 import 'package:empiricus_test/features/articles/data/models/article_model.dart';
 import 'package:empiricus_test/core/components/network_image.dart';
 import 'package:flutter/material.dart';
@@ -28,47 +28,44 @@ class ArticleCard extends StatelessWidget {
             ),
           ],
         ),
-        child: Row(
-          crossAxisAlignment: .center,
-          children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: .start,
-                children: [
-                  Text(
-                    article.name,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: .bold,
-                      color: AppColors.text,
+        child: IntrinsicHeight(
+          child: Row(
+            crossAxisAlignment: .start,
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: .start,
+                  children: [
+                    Text(
+                      article.name,
+                      style: AppTypography.text.copyWith(fontWeight: .w500),
+                      maxLines: 2,
+                      overflow: .ellipsis,
                     ),
-                    maxLines: 2,
-                    overflow: .ellipsis,
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    article.shortDescription,
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: AppColors.darkGrey,
-                      fontWeight: .bold,
+                    const SizedBox(height: 8),
+                    Text(
+                      article.shortDescription,
+                      style: AppTypography.secondaryText,
+                      maxLines: 4,
+                      overflow: .ellipsis,
                     ),
-                    maxLines: 4,
-                    overflow: .ellipsis,
+                  ],
+                ),
+              ),
+              const SizedBox(width: 24),
+              Align(
+                alignment: .center,
+                child: ClipRRect(
+                  borderRadius: .circular(8),
+                  child: AppNetworkImage(
+                    imageUrl: article.imageSmall,
+                    width: 80,
+                    height: 132,
                   ),
-                ],
+                ),
               ),
-            ),
-            const SizedBox(width: 24),
-            ClipRRect(
-              borderRadius: .circular(8),
-              child: AppNetworkImage(
-                imageUrl: article.imageSmall,
-                width: 90,
-                height: 132,
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

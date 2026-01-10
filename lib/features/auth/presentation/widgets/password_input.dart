@@ -52,7 +52,6 @@ class _PasswordInputState extends State<PasswordInput> {
       focusNode: _focusNode,
       obscureText: _obscureText,
       textInputAction: .done,
-      style: const TextStyle(fontWeight: .bold),
       decoration: InputDecoration(
         labelText: 'Digite sua senha',
         suffixIcon: IconButton(

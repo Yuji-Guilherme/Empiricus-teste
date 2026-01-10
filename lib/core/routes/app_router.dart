@@ -1,5 +1,7 @@
 import 'package:empiricus_test/core/di/service_locator.dart';
 import 'package:empiricus_test/core/services/auth_service.dart';
+import 'package:empiricus_test/features/articles/data/models/article_model.dart';
+import 'package:empiricus_test/features/articles/presentation/pages/details_page.dart';
 import 'package:empiricus_test/features/articles/presentation/pages/home_page.dart';
 import 'package:empiricus_test/features/auth/presentation/pages/login_page.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +10,7 @@ import 'package:go_router/go_router.dart';
 class AppRouter {
   static const String home = '/';
   static const String login = '/login';
+  static const String details = '/:slug';
 
   static final GoRouter router = GoRouter(
     initialLocation: login,
@@ -35,6 +38,16 @@ class AppRouter {
         name: 'home',
         builder: (BuildContext context, GoRouterState state) =>
             const HomePage(),
+      ),
+      GoRoute(
+        path: details,
+        name: 'details',
+        builder: (context, state) {
+          final slug = state.pathParameters['slug']!;
+          final article = state.extra as ArticleModel?;
+
+          return DetailsPage(slug: slug, article: article);
+        },
       ),
     ],
   );

@@ -52,7 +52,6 @@ class _EmailInputState extends State<EmailInput> {
       focusNode: _focusNode,
       keyboardType: .emailAddress,
       textInputAction: .next,
-      style: const TextStyle(fontWeight: .bold),
       decoration: InputDecoration(
         labelText: 'Digite seu e-mail',
         errorText: _errorText,

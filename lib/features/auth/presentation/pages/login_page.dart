@@ -1,5 +1,6 @@
 import 'package:empiricus_test/core/di/service_locator.dart';
 import 'package:empiricus_test/core/theme/app_colors.dart';
+import 'package:empiricus_test/core/theme/app_typography.dart';
 import 'package:empiricus_test/core/utils/validators.dart';
 import 'package:empiricus_test/features/auth/presentation/bloc/login_cubit.dart';
 import 'package:empiricus_test/features/auth/presentation/widgets/email_input.dart';
@@ -70,7 +71,7 @@ class _LoginFormState extends State<_LoginForm> {
       ..hideCurrentSnackBar()
       ..showSnackBar(
         SnackBar(
-          content: Text(message, style: TextStyle(fontWeight: .bold)),
+          content: Text(message),
           backgroundColor: Theme.of(context).colorScheme.error,
           behavior: .floating,
         ),
@@ -112,10 +113,8 @@ class _LoginFormState extends State<_LoginForm> {
                     const SizedBox(height: 24),
                     Text(
                       'Acesse sua conta',
-                      style: TextStyle(
-                        fontWeight: .bold,
+                      style: AppTypography.subtitle.copyWith(
                         color: AppColors.contrast,
-                        fontSize: 20,
                       ),
                     ),
                     const SizedBox(height: 16),

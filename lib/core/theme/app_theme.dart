@@ -1,3 +1,4 @@
+import 'package:empiricus_test/core/theme/app_typography.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'app_colors.dart';
@@ -25,16 +26,16 @@ class AppTheme {
       textTheme: GoogleFonts.outfitTextTheme().apply(
         bodyColor: AppColors.text,
         displayColor: AppColors.text,
+        fontFamily: 'Outfit',
       ),
 
       inputDecorationTheme: InputDecorationTheme(
-        labelStyle: const TextStyle(color: AppColors.text, fontWeight: .bold),
-
-        errorStyle: const TextStyle(fontWeight: .bold, fontSize: 12),
+        labelStyle: const TextStyle(color: AppColors.mediumGrey),
+        errorStyle: const TextStyle(fontSize: 12),
 
         floatingLabelStyle: const TextStyle(
           color: AppColors.contrast,
-          fontWeight: .w600,
+          fontWeight: .w500,
         ),
 
         enabledBorder: OutlineInputBorder(
@@ -71,7 +72,7 @@ class AppTheme {
           disabledBackgroundColor: AppColors.lightGrey,
           disabledForegroundColor: AppColors.mediumGrey,
           shape: RoundedRectangleBorder(borderRadius: .circular(4)),
-          textStyle: GoogleFonts.outfit(fontWeight: .w500, fontSize: 16),
+          textStyle: AppTypography.text,
         ),
       ),
 
@@ -85,7 +86,6 @@ class AppTheme {
           color: AppColors.text,
           fontSize: 20,
           fontWeight: .bold,
-          fontFamily: 'Outfit',
         ),
       ),
     );

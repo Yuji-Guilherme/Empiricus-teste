@@ -8,6 +8,7 @@ class AppNetworkImage extends StatelessWidget {
   final double? width;
   final double? height;
   final BoxFit fit;
+  final Widget? errorWidget;
 
   const AppNetworkImage({
     super.key,
@@ -15,6 +16,7 @@ class AppNetworkImage extends StatelessWidget {
     this.width,
     this.height,
     this.fit = .cover,
+    this.errorWidget,
   });
 
   @override
@@ -24,18 +26,23 @@ class AppNetworkImage extends StatelessWidget {
       width: width,
       height: height,
       fit: fit,
-      placeholder: (context, url) => Shimmer.fromColors(
+      placeholder: (_, _) => Shimmer.fromColors(
         baseColor: AppColors.lightGrey,
         highlightColor: AppColors.offWhite,
         child: Container(width: width, height: height, color: Colors.white),
       ),
-      errorWidget: (context, url, error) => Container(
-        width: width,
-        height: height,
-        color: AppColors.lightGrey,
-        child: const Icon(Icons.broken_image, color: AppColors.mediumGrey),
-      ),
+      errorWidget: (_, _, _) =>
+          errorWidget != null ? errorWidget! : _buildDefaultError(),
       fadeInDuration: const Duration(milliseconds: 200),
+    );
+  }
+
+  Widget _buildDefaultError() {
+    return Container(
+      width: width,
+      height: height,
+      color: AppColors.lightGrey,
+      child: const Icon(Icons.broken_image, color: AppColors.mediumGrey),
     );
   }
 }
