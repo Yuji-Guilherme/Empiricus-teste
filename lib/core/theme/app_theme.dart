@@ -38,12 +38,12 @@ class AppTheme {
         ),
 
         enabledBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: AppColors.contrast, width: 1),
+          borderSide: const BorderSide(color: AppColors.lightGrey, width: 2),
           borderRadius: .circular(4),
         ),
 
         focusedBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: AppColors.contrast, width: 2.0),
+          borderSide: const BorderSide(color: AppColors.contrast, width: 2),
           borderRadius: .circular(4),
         ),
 
@@ -53,7 +53,7 @@ class AppTheme {
         ),
 
         focusedErrorBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: AppColors.error, width: 2.0),
+          borderSide: const BorderSide(color: AppColors.error, width: 2),
           borderRadius: .circular(4),
         ),
       ),
@@ -68,8 +68,8 @@ class AppTheme {
         style: FilledButton.styleFrom(
           backgroundColor: AppColors.primary,
           foregroundColor: Colors.white,
-          disabledBackgroundColor: Colors.grey[300],
-          disabledForegroundColor: Colors.grey[500],
+          disabledBackgroundColor: AppColors.lightGrey,
+          disabledForegroundColor: AppColors.mediumGrey,
           shape: RoundedRectangleBorder(borderRadius: .circular(4)),
           textStyle: GoogleFonts.outfit(fontWeight: .w500, fontSize: 16),
         ),

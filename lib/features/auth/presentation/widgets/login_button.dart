@@ -16,6 +16,7 @@ class LoginButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 44,
+      width: double.infinity,
       child: ValueListenableBuilder<bool>(
         valueListenable: isValidNotifier,
         builder: (context, isValid, _) {
@@ -30,7 +31,7 @@ class LoginButton extends StatelessWidget {
                       color: Colors.white,
                     ),
                   )
-                : const Text('ENTRAR'),
+                : const Text('Entrar'),
           );
         },
       ),

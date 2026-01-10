@@ -7,6 +7,7 @@ import 'package:empiricus_test/features/auth/presentation/widgets/login_button.d
 import 'package:empiricus_test/features/auth/presentation/widgets/password_input.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -94,36 +95,45 @@ class _LoginFormState extends State<_LoginForm> {
         if (state is LoginFailure) _showSnackbar(state.message);
       },
       builder: (context, state) {
-        return Scaffold(
-          body: Center(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(horizontal: 32),
-              child: Column(
-                crossAxisAlignment: .stretch,
-                children: [
-                  Text(
-                    'Acesse sua conta',
-                    style: TextStyle(
-                      fontWeight: .bold,
-                      color: AppColors.contrast,
-                      fontSize: 20,
+        return GestureDetector(
+          onTap: () => FocusScope.of(context).unfocus(),
+          child: Scaffold(
+            body: Center(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.symmetric(horizontal: 32),
+                child: Column(
+                  crossAxisAlignment: .start,
+                  children: [
+                    SvgPicture.asset(
+                      'assets/images/logotype.svg',
+                      height: 36,
+                      fit: .fitHeight,
                     ),
-                  ),
-                  const SizedBox(height: 32),
-                  EmailInput(controller: _emailController),
-                  const SizedBox(height: 16),
-                  PasswordInput(
-                    controller: _passwordController,
-                    onSubmitted: _submitLogin,
-                  ),
-                  const SizedBox(height: 32),
-                  LoginButton(
-                    isValidNotifier: _isFormValid,
-                    isLoading: state is LoginLoading,
-                    onPressed: _submitLogin,
-                  ),
-                  const SizedBox(height: 40),
-                ],
+                    const SizedBox(height: 24),
+                    Text(
+                      'Acesse sua conta',
+                      style: TextStyle(
+                        fontWeight: .bold,
+                        color: AppColors.contrast,
+                        fontSize: 20,
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    EmailInput(controller: _emailController),
+                    const SizedBox(height: 16),
+                    PasswordInput(
+                      controller: _passwordController,
+                      onSubmitted: _submitLogin,
+                    ),
+                    const SizedBox(height: 24),
+                    LoginButton(
+                      isValidNotifier: _isFormValid,
+                      isLoading: state is LoginLoading,
+                      onPressed: _submitLogin,
+                    ),
+                    const SizedBox(height: 40),
+                  ],
+                ),
               ),
             ),
           ),
