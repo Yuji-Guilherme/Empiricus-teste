@@ -43,6 +43,8 @@ dependencies:
   google_fonts: ^7.0.0
   flutter_svg: ^2.2.3
   json_annotation: ^4.9.0
+  cached_network_image: ^3.4.1
+  shimmer: ^3.0.0
 
 dev_dependencies:
   flutter_test:

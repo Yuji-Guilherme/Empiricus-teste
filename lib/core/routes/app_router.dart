@@ -1,5 +1,6 @@
 import 'package:empiricus_test/core/di/service_locator.dart';
 import 'package:empiricus_test/core/services/auth_service.dart';
+import 'package:empiricus_test/features/articles/presentation/pages/home_page.dart';
 import 'package:empiricus_test/features/auth/presentation/pages/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -33,7 +34,7 @@ class AppRouter {
         path: home,
         name: 'home',
         builder: (BuildContext context, GoRouterState state) =>
-            const Scaffold(body: Center(child: Text('Home'))),
+            const HomePage(),
       ),
     ],
   );

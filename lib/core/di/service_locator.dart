@@ -1,7 +1,7 @@
 import 'package:empiricus_test/core/constants/api_constants.dart';
 import 'package:empiricus_test/core/network/http_client.dart';
 import 'package:empiricus_test/core/services/auth_service.dart';
-import 'package:empiricus_test/features/articles/data/bloc/article_bloc.dart';
+import 'package:empiricus_test/features/articles/bloc/article_bloc.dart';
 import 'package:empiricus_test/features/articles/data/repositories/article_repository_impl.dart';
 import 'package:empiricus_test/features/articles/domain/repositories/article_repository.dart';
 import 'package:empiricus_test/features/auth/data/repositories/auth_repository_impl.dart';

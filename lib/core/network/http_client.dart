@@ -21,9 +21,11 @@ class HttpClientImplementation implements IHttpClient {
     final uri = Uri.parse(_baseUrl);
 
     try {
-      final response = await _client.get(uri);
+      final response = await _client
+          .get(uri)
+          .timeout(const Duration(seconds: 10));
 
-      return _handleResponse(response).timeout(const Duration(seconds: 10));
+      return _handleResponse(response);
     } on SocketException {
       throw NetworkFailure();
     } on TimeoutException {
@@ -31,7 +33,7 @@ class HttpClientImplementation implements IHttpClient {
     } catch (e) {
       if (e is Failure) rethrow;
 
-      throw ServerFailure("Erro inesperado: $e", 500);
+      throw ServerFailure("Erro inesperado", 500);
     }
   }
 

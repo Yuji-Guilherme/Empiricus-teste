@@ -29,7 +29,7 @@ class ArticleBloc extends Bloc<ArticleEvent, ArticleState> {
     } catch (e) {
       emit(
         const ArticleError(
-          "Ocorreu um erro inesperado ao carregar as notícias.",
+          "Ocorreu um erro inesperado ao carregar as assinaturas.",
         ),
       );
     }
