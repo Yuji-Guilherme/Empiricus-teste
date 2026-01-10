@@ -1,6 +1,6 @@
 import 'package:empiricus_test/core/constants/mock_user.dart';
 import 'package:empiricus_test/core/errors/failures.dart';
-import 'package:empiricus_test/features/auth/domain/repositories/i_auth_repository.dart';
+import 'package:empiricus_test/features/auth/domain/repositories/auth_repository.dart';
 
 class AuthRepositoryImpl implements IAuthRepository {
   @override

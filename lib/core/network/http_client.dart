@@ -1,4 +1,7 @@
+import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
+import 'package:empiricus_test/core/errors/failures.dart';
 import 'package:http/http.dart' as http;
 
 abstract class IHttpClient {
@@ -20,18 +23,42 @@ class HttpClientImplementation implements IHttpClient {
     try {
       final response = await _client.get(uri);
 
-      return _handleResponse(response);
+      return _handleResponse(response).timeout(const Duration(seconds: 10));
+    } on SocketException {
+      throw NetworkFailure();
+    } on TimeoutException {
+      throw NetworkFailure();
     } catch (e) {
-      throw Exception('Erro de conexão: $e');
+      if (e is Failure) rethrow;
+
+      throw ServerFailure("Erro inesperado: $e", 500);
     }
   }
 
   dynamic _handleResponse(http.Response response) {
-    if (response.statusCode == 200) {
-      if (response.body.isEmpty) return null;
-      return jsonDecode(response.body);
-    } else {
-      throw Exception('Erro na requisição: Código ${response.statusCode}');
+    switch (response.statusCode) {
+      case 200:
+        if (response.body.isEmpty) return null;
+        try {
+          return jsonDecode(response.body);
+        } catch (e) {
+          throw ServerFailure(
+            "Erro ao processar resposta do servidor",
+            response.statusCode,
+          );
+        }
+      case 404:
+        throw ServerFailure("Recurso não encontrado", 404);
+      case >= 500:
+        throw ServerFailure(
+          "Serviço indisponível no momento",
+          response.statusCode,
+        );
+      default:
+        throw ServerFailure(
+          'Erro inesperado: ${response.reasonPhrase ?? "Desconhecido"}',
+          response.statusCode,
+        );
     }
   }
 }

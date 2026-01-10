@@ -1,7 +1,7 @@
 import 'package:empiricus_test/core/di/service_locator.dart';
 import 'package:empiricus_test/core/theme/app_colors.dart';
 import 'package:empiricus_test/core/utils/validators.dart';
-import 'package:empiricus_test/features/auth/presentation/cubit/login_cubit.dart';
+import 'package:empiricus_test/features/auth/presentation/bloc/login_cubit.dart';
 import 'package:empiricus_test/features/auth/presentation/widgets/email_input.dart';
 import 'package:empiricus_test/features/auth/presentation/widgets/login_button.dart';
 import 'package:empiricus_test/features/auth/presentation/widgets/password_input.dart';
@@ -58,7 +58,6 @@ class _LoginFormState extends State<_LoginForm> {
 
     if (Validators.isValidEmail(email) &&
         Validators.isValidPassword(password)) {
-      FocusScope.of(context).unfocus();
       context.read<LoginCubit>().loginSubmitted(
         email: _emailController.text,
         password: _passwordController.text,
@@ -73,7 +72,7 @@ class _LoginFormState extends State<_LoginForm> {
         SnackBar(
           content: Text(message, style: TextStyle(fontWeight: .bold)),
           backgroundColor: Theme.of(context).colorScheme.error,
-          behavior: SnackBarBehavior.floating,
+          behavior: .floating,
         ),
       );
   }
@@ -91,8 +90,9 @@ class _LoginFormState extends State<_LoginForm> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<LoginCubit, LoginState>(
-      listener: (context, state) {
+      listener: (_, state) {
         if (state is LoginFailure) _showSnackbar(state.message);
+        if (state is LoginSuccess) FocusScope.of(context).unfocus();
       },
       builder: (context, state) {
         return GestureDetector(

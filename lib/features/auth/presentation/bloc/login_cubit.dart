@@ -1,6 +1,6 @@
 import 'package:empiricus_test/core/errors/failures.dart';
 import 'package:empiricus_test/core/services/auth_service.dart';
-import 'package:empiricus_test/features/auth/domain/repositories/i_auth_repository.dart';
+import 'package:empiricus_test/features/auth/domain/repositories/auth_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 
