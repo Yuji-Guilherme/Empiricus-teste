@@ -55,12 +55,15 @@ class ArticleCard extends StatelessWidget {
               const SizedBox(width: 24),
               Align(
                 alignment: .center,
-                child: ClipRRect(
-                  borderRadius: .circular(8),
-                  child: AppNetworkImage(
-                    imageUrl: article.imageSmall,
-                    width: 80,
-                    height: 132,
+                child: Hero(
+                  tag: article.identifier.slug,
+                  child: ClipRRect(
+                    borderRadius: .circular(8),
+                    child: AppNetworkImage(
+                      imageUrl: article.imageSmall,
+                      width: 80,
+                      height: 132,
+                    ),
                   ),
                 ),
               ),

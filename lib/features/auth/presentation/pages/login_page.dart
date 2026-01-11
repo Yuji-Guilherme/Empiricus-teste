@@ -1,6 +1,7 @@
 import 'package:empiricus_test/core/di/service_locator.dart';
 import 'package:empiricus_test/core/theme/app_colors.dart';
 import 'package:empiricus_test/core/theme/app_typography.dart';
+import 'package:empiricus_test/core/utils/app_alert.dart';
 import 'package:empiricus_test/core/utils/validators.dart';
 import 'package:empiricus_test/features/auth/presentation/bloc/login_cubit.dart';
 import 'package:empiricus_test/features/auth/presentation/widgets/email_input.dart';
@@ -9,21 +10,26 @@ import 'package:empiricus_test/features/auth/presentation/widgets/password_input
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+  final String? redirectUrl;
+
+  const LoginPage({super.key, this.redirectUrl});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => sl<LoginCubit>(),
-      child: const _LoginForm(),
+      child: _LoginForm(redirectUrl: redirectUrl),
     );
   }
 }
 
 class _LoginForm extends StatefulWidget {
-  const _LoginForm();
+  final String? redirectUrl;
+
+  const _LoginForm({this.redirectUrl});
 
   @override
   State<_LoginForm> createState() => _LoginFormState();
@@ -66,16 +72,12 @@ class _LoginFormState extends State<_LoginForm> {
     }
   }
 
-  void _showSnackbar(String message) {
-    ScaffoldMessenger.of(context)
-      ..hideCurrentSnackBar()
-      ..showSnackBar(
-        SnackBar(
-          content: Text(message),
-          backgroundColor: Theme.of(context).colorScheme.error,
-          behavior: .floating,
-        ),
-      );
+  void _onLoginSuccess() {
+    FocusScope.of(context).unfocus();
+    debugPrint(widget.redirectUrl);
+    if (widget.redirectUrl == null) return context.go('/');
+
+    context.go(widget.redirectUrl!);
   }
 
   @override
@@ -92,8 +94,10 @@ class _LoginFormState extends State<_LoginForm> {
   Widget build(BuildContext context) {
     return BlocConsumer<LoginCubit, LoginState>(
       listener: (_, state) {
-        if (state is LoginFailure) _showSnackbar(state.message);
-        if (state is LoginSuccess) FocusScope.of(context).unfocus();
+        if (state is LoginFailure) {
+          AppAlert.show(context, state.message, type: .error);
+        }
+        if (state is LoginSuccess) _onLoginSuccess();
       },
       builder: (context, state) {
         return GestureDetector(

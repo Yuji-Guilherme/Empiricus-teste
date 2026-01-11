@@ -1,5 +1,6 @@
 import 'package:empiricus_test/core/theme/app_colors.dart';
 import 'package:empiricus_test/core/theme/app_typography.dart';
+import 'package:empiricus_test/core/utils/app_alert.dart';
 import 'package:empiricus_test/features/articles/data/models/feature_model.dart';
 import 'package:flutter/material.dart';
 
@@ -12,16 +13,7 @@ class FeatureWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        ScaffoldMessenger.of(context)
-          ..hideCurrentSnackBar()
-          ..showSnackBar(
-            SnackBar(
-              content: Text('O destaque "${feature.title}" é informativo.'),
-              behavior: SnackBarBehavior.floating,
-              duration: const Duration(seconds: 2),
-              action: SnackBarAction(label: 'OK', onPressed: () {}),
-            ),
-          );
+        AppAlert.show(context, 'O destaque "${feature.title}" é informativo.');
       },
       child: Container(
         margin: const .only(bottom: 12),

@@ -1,3 +1,4 @@
+import 'package:empiricus_test/core/components/app_bar.dart';
 import 'package:empiricus_test/core/components/error_icon_widget.dart';
 import 'package:empiricus_test/core/di/service_locator.dart';
 import 'package:empiricus_test/core/services/auth_service.dart';
@@ -11,7 +12,6 @@ import 'package:empiricus_test/features/articles/presentation/widgets/article_ca
 import 'package:empiricus_test/features/articles/presentation/widgets/article_card_skeleton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 
 class HomePage extends StatelessWidget {
@@ -22,28 +22,14 @@ class HomePage extends StatelessWidget {
     return BlocProvider(
       create: (_) => sl<ArticleBloc>()..add(LoadArticles()),
       child: Scaffold(
-        appBar: AppBar(
-          toolbarHeight: 68,
-          leading: Padding(
-            padding: const .only(left: 5),
-            child: Container(
-              padding: const .all(12),
-              child: SvgPicture.asset('assets/images/logo.svg', fit: .contain),
-            ),
-          ),
+        appBar: CustomAppBar(
           title: const Text('Assinaturas'),
-          centerTitle: true,
-          actions: [
-            Padding(
-              padding: const .only(right: 4),
-              child: IconButton(
-                icon: const Icon(Icons.logout),
-                onPressed: () {
-                  sl<AuthService>().logout();
-                },
-              ),
-            ),
-          ],
+          actionWidget: IconButton(
+            icon: const Icon(Icons.logout),
+            onPressed: () {
+              sl<AuthService>().logout();
+            },
+          ),
         ),
         body: BlocBuilder<ArticleBloc, ArticleState>(
           builder: (context, state) {

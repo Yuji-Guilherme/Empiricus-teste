@@ -1,3 +1,4 @@
+import 'package:empiricus_test/core/components/app_bar.dart';
 import 'package:empiricus_test/core/components/network_image.dart';
 import 'package:empiricus_test/core/di/service_locator.dart';
 import 'package:empiricus_test/core/theme/app_colors.dart';
@@ -30,21 +31,14 @@ class DetailsPage extends StatelessWidget {
         return bloc;
       },
       child: Scaffold(
-        appBar: AppBar(
-          scrolledUnderElevation: 0,
-          backgroundColor: Colors.transparent,
-          systemOverlayStyle: .dark,
-          leading: Padding(
-            padding: const .all(12),
-            child: IconButton(
-              icon: const Icon(
-                Icons.arrow_back_ios,
-                color: AppColors.contrast,
-                size: 22,
-              ),
-              onPressed: () =>
-                  context.canPop() ? context.pop() : context.go('/'),
+        appBar: CustomAppBar(
+          actionWidget: IconButton(
+            icon: const Icon(
+              Icons.close_rounded,
+              color: AppColors.contrast,
+              size: 26,
             ),
+            onPressed: () => context.canPop() ? context.pop() : context.go('/'),
           ),
         ),
         body: BlocBuilder<ArticleDetailBloc, ArticleDetailState>(
