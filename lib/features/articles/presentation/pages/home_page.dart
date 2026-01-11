@@ -1,9 +1,11 @@
+import 'package:empiricus_test/core/components/error_icon_widget.dart';
 import 'package:empiricus_test/core/di/service_locator.dart';
 import 'package:empiricus_test/core/services/auth_service.dart';
 import 'package:empiricus_test/core/theme/app_colors.dart';
-import 'package:empiricus_test/features/articles/bloc/article_bloc.dart';
-import 'package:empiricus_test/features/articles/bloc/article_event.dart';
-import 'package:empiricus_test/features/articles/bloc/article_state.dart';
+import 'package:empiricus_test/core/theme/app_typography.dart';
+import 'package:empiricus_test/features/articles/presentation/bloc/article_bloc.dart';
+import 'package:empiricus_test/features/articles/presentation/bloc/article_event.dart';
+import 'package:empiricus_test/features/articles/presentation/bloc/article_state.dart';
 import 'package:empiricus_test/features/articles/data/models/article_model.dart';
 import 'package:empiricus_test/features/articles/presentation/widgets/article_card.dart';
 import 'package:empiricus_test/features/articles/presentation/widgets/article_card_skeleton.dart';
@@ -76,12 +78,12 @@ class HomePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: .center,
           children: [
-            const Icon(Icons.error_outline, size: 48, color: Colors.grey),
+            ErrorIconWidget(icon: Icons.error_outline, size: 32),
             const SizedBox(height: 16),
             Text(
               message,
               textAlign: .center,
-              style: const TextStyle(color: AppColors.text, fontWeight: .bold),
+              style: AppTypography.text.copyWith(height: 1.5),
             ),
             const SizedBox(height: 16),
             FilledButton(

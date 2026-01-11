@@ -1,9 +1,10 @@
 import 'package:empiricus_test/core/constants/api_constants.dart';
 import 'package:empiricus_test/core/network/http_client.dart';
 import 'package:empiricus_test/core/services/auth_service.dart';
-import 'package:empiricus_test/features/articles/bloc/article_bloc.dart';
+import 'package:empiricus_test/features/articles/presentation/bloc/article_bloc.dart';
 import 'package:empiricus_test/features/articles/data/repositories/article_repository_impl.dart';
 import 'package:empiricus_test/features/articles/domain/repositories/article_repository.dart';
+import 'package:empiricus_test/features/articles/presentation/bloc/detail_bloc.dart';
 import 'package:empiricus_test/features/auth/data/repositories/auth_repository_impl.dart';
 import 'package:empiricus_test/features/auth/domain/repositories/auth_repository.dart';
 import 'package:empiricus_test/features/auth/presentation/bloc/login_cubit.dart';
@@ -32,4 +33,7 @@ Future<void> setupServiceLocator() async {
 
   sl.registerFactory(() => LoginCubit(authRepository: sl(), authService: sl()));
   sl.registerFactory(() => ArticleBloc(repository: sl<IArticleRepository>()));
+  sl.registerFactory(
+    () => ArticleDetailBloc(repository: sl<IArticleRepository>()),
+  );
 }

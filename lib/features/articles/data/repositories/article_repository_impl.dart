@@ -11,18 +11,32 @@ class ArticleRepositoryImpl implements IArticleRepository {
 
   @override
   Future<List<ArticleModel>> getArticles() async {
-    final response = await _client.get();
-
-    if (response is! Map<String, dynamic>) {
-      throw ServerFailure("Formato de resposta inválido", 0);
-    }
-
     try {
+      final response = await _client.get();
+
+      if (response is! Map<String, dynamic>) {
+        throw ServerFailure("Formato de resposta inválido", 0);
+      }
       final responseModel = ArticleResponseModel.fromJson(response);
 
       return responseModel.groups;
     } catch (e) {
       throw ServerFailure("Erro ao processar os dados", 0);
+    }
+  }
+
+  @override
+  Future<ArticleModel> getArticleBySlug(String slug) async {
+    try {
+      final response = await getArticles();
+
+      return response.firstWhere(
+        (article) => article.identifier.slug == slug,
+        orElse: () => throw ServerFailure("Artigo não encontrado", 404),
+      );
+    } catch (e) {
+      if (e is Failure) rethrow;
+      throw ServerFailure("Erro ao buscar", 0);
     }
   }
 }
