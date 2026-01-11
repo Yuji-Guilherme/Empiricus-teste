@@ -46,7 +46,7 @@ class DetailSkeleton extends StatelessWidget {
               height: 28,
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: .circular(8),
+                borderRadius: .circular(6),
               ),
             ),
           ),

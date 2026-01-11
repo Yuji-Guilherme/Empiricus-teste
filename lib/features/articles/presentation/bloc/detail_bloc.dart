@@ -15,10 +15,14 @@ class ArticleDetailBloc extends Bloc<ArticleDetailEvent, ArticleDetailState> {
       try {
         final article = await _repository.getArticleBySlug(event.slug);
         emit(ArticleDetailLoaded(article));
-      } on Failure catch (e) {
-        emit(ArticleDetailError(e.message));
+      } on Failure catch (failure) {
+        if (failure case ServerFailure(statusCode: 404)) {
+          emit(ArticleDetailNotfound());
+        } else {
+          emit(ArticleDetailError(failure));
+        }
       } catch (e) {
-        emit(const ArticleDetailError("Erro inesperado ao carregar"));
+        emit(const ArticleDetailError(UnknownFailure()));
       }
     });
   }

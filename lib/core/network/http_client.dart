@@ -27,40 +27,27 @@ class HttpClientImplementation implements IHttpClient {
 
       return _handleResponse(response);
     } on SocketException {
-      throw NetworkFailure();
+      throw const NetworkFailure();
     } on TimeoutException {
-      throw NetworkFailure();
+      throw const NetworkFailure();
     } catch (e) {
       if (e is Failure) rethrow;
 
-      throw ServerFailure("Erro inesperado", 500);
+      throw const UnknownFailure();
     }
   }
 
   dynamic _handleResponse(http.Response response) {
-    switch (response.statusCode) {
-      case 200:
-        if (response.body.isEmpty) return null;
-        try {
-          return jsonDecode(response.body);
-        } catch (e) {
-          throw ServerFailure(
-            "Erro ao processar resposta do servidor",
-            response.statusCode,
-          );
-        }
-      case 404:
-        throw ServerFailure("Recurso não encontrado", 404);
-      case >= 500:
-        throw ServerFailure(
-          "Serviço indisponível no momento",
-          response.statusCode,
-        );
-      default:
-        throw ServerFailure(
-          'Erro inesperado: ${response.reasonPhrase ?? "Desconhecido"}',
-          response.statusCode,
-        );
+    if (response.statusCode < 200 || response.statusCode > 299) {
+      throw ServerFailure(statusCode: response.statusCode);
+    }
+
+    if (response.body.isEmpty) return null;
+
+    try {
+      return jsonDecode(response.body);
+    } catch (e) {
+      throw const DataParsingFailure();
     }
   }
 }

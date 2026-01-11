@@ -25,13 +25,9 @@ class ArticleBloc extends Bloc<ArticleEvent, ArticleState> {
 
       emit(ArticleLoaded(articles: articles));
     } on Failure catch (e) {
-      emit(ArticleError(e.message));
+      emit(ArticleError(e));
     } catch (e) {
-      emit(
-        const ArticleError(
-          "Ocorreu um erro inesperado ao carregar as assinaturas.",
-        ),
-      );
+      emit(const ArticleError(UnknownFailure()));
     }
   }
 
@@ -43,9 +39,9 @@ class ArticleBloc extends Bloc<ArticleEvent, ArticleState> {
       final articles = await _repository.getArticles();
       emit(ArticleLoaded(articles: articles));
     } on Failure catch (e) {
-      emit(ArticleError(e.message));
+      emit(ArticleError(e));
     } catch (e) {
-      emit(const ArticleError("Erro ao atualizar."));
+      emit(const ArticleError(UnknownFailure()));
     }
   }
 }

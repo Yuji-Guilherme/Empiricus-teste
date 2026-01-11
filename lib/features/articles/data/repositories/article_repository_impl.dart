@@ -1,27 +1,39 @@
 import 'package:empiricus_test/core/errors/failures.dart';
 import 'package:empiricus_test/core/network/http_client.dart';
+import 'package:empiricus_test/core/network/network_info.dart';
 import 'package:empiricus_test/features/articles/data/models/article_model.dart';
 import 'package:empiricus_test/features/articles/data/models/article_response_model.dart';
 import 'package:empiricus_test/features/articles/domain/repositories/article_repository.dart';
 
 class ArticleRepositoryImpl implements IArticleRepository {
   final IHttpClient _client;
+  final NetworkInfo _networkInfo;
 
-  ArticleRepositoryImpl(this._client);
+  ArticleRepositoryImpl({
+    required IHttpClient client,
+    required NetworkInfo networkInfo,
+  }) : _client = client,
+       _networkInfo = networkInfo;
 
   @override
   Future<List<ArticleModel>> getArticles() async {
+    if (!await _networkInfo.isConnected) {
+      throw const NetworkFailure();
+    }
+
     try {
       final response = await _client.get();
 
       if (response is! Map<String, dynamic>) {
-        throw ServerFailure("Formato de resposta inválido", 0);
+        throw const DataParsingFailure();
       }
+
       final responseModel = ArticleResponseModel.fromJson(response);
 
       return responseModel.groups;
     } catch (e) {
-      throw ServerFailure("Erro ao processar os dados", 0);
+      if (e is Failure) rethrow;
+      throw const UnknownFailure();
     }
   }
 
@@ -32,11 +44,11 @@ class ArticleRepositoryImpl implements IArticleRepository {
 
       return response.firstWhere(
         (article) => article.identifier.slug == slug,
-        orElse: () => throw ServerFailure("Artigo não encontrado", 404),
+        orElse: () => throw const ServerFailure(statusCode: 404),
       );
     } catch (e) {
       if (e is Failure) rethrow;
-      throw ServerFailure("Erro ao buscar", 0);
+      throw const UnknownFailure();
     }
   }
 }

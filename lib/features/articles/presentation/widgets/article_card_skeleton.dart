@@ -14,8 +14,8 @@ class ArticleCardSkeleton extends StatelessWidget {
         height: 156,
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: AppColors.mediumGrey),
+          borderRadius: .circular(8),
+          border: .all(color: AppColors.mediumGrey),
         ),
       ),
     );

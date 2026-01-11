@@ -20,7 +20,7 @@ class FeatureWidget extends StatelessWidget {
         padding: const .all(16),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: .circular(12),
+          borderRadius: .circular(6),
           border: .all(color: AppColors.lightGrey, width: 0.8),
         ),
         child: Column(

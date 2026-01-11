@@ -3,6 +3,7 @@ import 'package:empiricus_test/core/components/network_image.dart';
 import 'package:empiricus_test/core/di/service_locator.dart';
 import 'package:empiricus_test/core/theme/app_colors.dart';
 import 'package:empiricus_test/core/theme/app_typography.dart';
+import 'package:empiricus_test/core/utils/failure_extension.dart';
 import 'package:empiricus_test/features/articles/data/models/article_model.dart';
 import 'package:empiricus_test/features/articles/presentation/bloc/detail_bloc.dart';
 import 'package:empiricus_test/features/articles/presentation/bloc/detail_event.dart';
@@ -10,6 +11,7 @@ import 'package:empiricus_test/features/articles/presentation/bloc/detail_state.
 import 'package:empiricus_test/features/articles/presentation/widgets/author_widget.dart';
 import 'package:empiricus_test/features/articles/presentation/widgets/detail_not_found.dart';
 import 'package:empiricus_test/features/articles/presentation/widgets/detail_skeleton.dart';
+import 'package:empiricus_test/features/articles/presentation/widgets/error_view.dart';
 import 'package:empiricus_test/features/articles/presentation/widgets/feature_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -48,7 +50,16 @@ class DetailsPage extends StatelessWidget {
             return switch (state) {
               ArticleDetailLoading() ||
               ArticleDetailInitial() => DetailSkeleton(),
-              ArticleDetailError() => DetailNotFound(),
+              ArticleDetailError(:final failure) => ErrorView(
+                message: failure.displayMessage,
+                icon: failure.icon,
+                onRetry: () {
+                  context.read<ArticleDetailBloc>().add(
+                    LoadArticleDetail(slug),
+                  );
+                },
+              ),
+              ArticleDetailNotfound() => DetailNotFound(),
               ArticleDetailLoaded(:final article) => _buildContent(article),
             };
           },
@@ -64,7 +75,7 @@ class DetailsPage extends StatelessWidget {
         crossAxisAlignment: .start,
         children: [
           Text(
-            "ASSINATURA",
+            'ASSINATURA',
             style: TextStyle(
               color: AppColors.primary,
               fontSize: 12,
@@ -77,7 +88,7 @@ class DetailsPage extends StatelessWidget {
           Hero(
             tag: article.identifier.slug,
             child: ClipRRect(
-              borderRadius: .circular(8),
+              borderRadius: .circular(6),
               child: AppNetworkImage(
                 imageUrl: article.imageLarge,
                 width: double.infinity,
@@ -94,13 +105,13 @@ class DetailsPage extends StatelessWidget {
           const SizedBox(height: 24),
           if (article.authors.isNotEmpty) ...[
             const SizedBox(height: 16),
-            const Text("Escrito por:", style: AppTypography.subtitle),
+            const Text('Escrito por:', style: AppTypography.subtitle),
             const SizedBox(height: 8),
             ...article.authors.map((author) => AuthorWidget(author: author)),
           ],
           if (article.features.isNotEmpty) ...[
             const SizedBox(height: 16),
-            const Text("Destaques:", style: AppTypography.subtitle),
+            const Text('Destaques:', style: AppTypography.subtitle),
             const SizedBox(height: 16),
             ...article.features.map(
               (feature) => FeatureWidget(feature: feature),

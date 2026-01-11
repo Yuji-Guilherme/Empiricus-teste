@@ -1,3 +1,4 @@
+import 'package:empiricus_test/core/errors/failures.dart';
 import 'package:empiricus_test/features/articles/data/models/article_model.dart';
 import 'package:equatable/equatable.dart';
 
@@ -19,8 +20,11 @@ final class ArticleDetailLoaded extends ArticleDetailState {
 }
 
 final class ArticleDetailError extends ArticleDetailState {
-  final String message;
-  const ArticleDetailError(this.message);
+  final Failure failure;
+  const ArticleDetailError(this.failure);
+
   @override
-  List<Object> get props => [message];
+  List<Object> get props => [failure];
 }
+
+final class ArticleDetailNotfound extends ArticleDetailState {}

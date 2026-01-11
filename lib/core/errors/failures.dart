@@ -1,17 +1,28 @@
 abstract class Failure implements Exception {
-  final String message;
-  Failure(this.message);
+  final String? message;
+
+  const Failure([this.message]);
 }
 
 class AuthFailure extends Failure {
-  AuthFailure() : super('E-mail ou senha incorretos.');
+  const AuthFailure([super.message]);
 }
 
 class ServerFailure extends Failure {
   final int statusCode;
-  ServerFailure(super.message, this.statusCode);
+
+  const ServerFailure({required this.statusCode, String? message})
+    : super(message);
+}
+
+class DataParsingFailure extends Failure {
+  const DataParsingFailure([super.message]);
 }
 
 class NetworkFailure extends Failure {
-  NetworkFailure() : super('Sem conexão com a internet');
+  const NetworkFailure([super.message]);
+}
+
+class UnknownFailure extends Failure {
+  const UnknownFailure([super.message]);
 }

@@ -11,14 +11,13 @@ class ArticleCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return GestureDetector(
       onTap: onTap,
-      borderRadius: .circular(12),
       child: Container(
         padding: const .all(12),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: .circular(12),
+          borderRadius: .circular(8),
           border: .all(color: Colors.grey.shade200),
           boxShadow: [
             BoxShadow(
@@ -58,7 +57,7 @@ class ArticleCard extends StatelessWidget {
                 child: Hero(
                   tag: article.identifier.slug,
                   child: ClipRRect(
-                    borderRadius: .circular(8),
+                    borderRadius: .circular(4),
                     child: AppNetworkImage(
                       imageUrl: article.imageSmall,
                       width: 80,
