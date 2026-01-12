@@ -10,3 +10,5 @@ sealed class ArticleEvent extends Equatable {
 class LoadArticles extends ArticleEvent {}
 
 class RefreshArticles extends ArticleEvent {}
+
+class RetryArticles extends ArticleEvent {}

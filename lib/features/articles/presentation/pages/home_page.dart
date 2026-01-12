@@ -41,15 +41,24 @@ class HomePage extends StatelessWidget {
                 type: .error,
               );
             }
+
+            if (state is ArticleError && state.retryFailure != null) {
+              AppAlert.show(
+                context,
+                state.retryFailure!.displayMessage,
+                type: .error,
+              );
+            }
           },
           builder: (context, state) {
             return switch (state) {
               ArticleLoading() => _buildLoadingList(),
-              ArticleError(:final failure) => ErrorView(
+              ArticleError(:final failure, :final isRetrying) => ErrorView(
                 message: failure.displayMessage,
                 icon: failure.icon,
+                isLoading: isRetrying,
                 onRetry: () {
-                  context.read<ArticleBloc>().add(LoadArticles());
+                  context.read<ArticleBloc>().add(RetryArticles());
                 },
               ),
               ArticleLoaded(:final articles) => _buildArticleList(

@@ -35,9 +35,27 @@ final class ArticleLoaded extends ArticleState {
 
 final class ArticleError extends ArticleState {
   final Failure failure;
+  final bool isRetrying;
+  final Failure? retryFailure;
 
-  const ArticleError(this.failure);
+  const ArticleError(
+    this.failure, {
+    this.isRetrying = false,
+    this.retryFailure,
+  });
+
+  ArticleError copyWith({
+    Failure? failure,
+    bool? isRetrying,
+    Failure? retryFailure,
+  }) {
+    return ArticleError(
+      failure ?? this.failure,
+      isRetrying: isRetrying ?? this.isRetrying,
+      retryFailure: retryFailure,
+    );
+  }
 
   @override
-  List<Object> get props => [failure];
+  List<Object?> get props => [failure, isRetrying, retryFailure];
 }

@@ -26,7 +26,7 @@ class LoginCubit extends Cubit<LoginState> {
     } on Failure catch (failure) {
       emit(LoginFailure(failure.displayMessage));
     } catch (e) {
-      emit(const LoginFailure('Ocorreu um erro inesperado. Tente novamente.'));
+      emit(LoginFailure(const UnknownFailure().displayMessage));
     }
   }
 }

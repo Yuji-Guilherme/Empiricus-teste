@@ -12,6 +12,7 @@ class ArticleBloc extends Bloc<ArticleEvent, ArticleState> {
       super(ArticleInitial()) {
     on<LoadArticles>(_onLoadArticles);
     on<RefreshArticles>(_onRefreshArticles);
+    on<RetryArticles>(_onRetryArticles);
   }
 
   Future<void> _onLoadArticles(
@@ -38,15 +39,39 @@ class ArticleBloc extends Bloc<ArticleEvent, ArticleState> {
     final currentState = state;
     if (currentState is! ArticleLoaded) return;
 
+    emit(currentState.copyWith(refreshFailure: null));
     try {
-      emit(currentState.copyWith(refreshFailure: null));
       final articles = await _repository.getArticles();
 
       emit(ArticleLoaded(articles: articles));
     } on Failure catch (failure) {
       emit(currentState.copyWith(refreshFailure: failure));
     } catch (e) {
-      emit(const ArticleError(UnknownFailure()));
+      emit(currentState.copyWith(refreshFailure: const UnknownFailure()));
+    }
+  }
+
+  Future<void> _onRetryArticles(
+    RetryArticles event,
+    Emitter<ArticleState> emit,
+  ) async {
+    final currentState = state;
+    if (currentState is! ArticleError) return;
+
+    emit(currentState.copyWith(isRetrying: true, retryFailure: null));
+    try {
+      final articles = await _repository.getArticles();
+
+      emit(ArticleLoaded(articles: articles));
+    } on Failure catch (failure) {
+      emit(currentState.copyWith(isRetrying: false, retryFailure: failure));
+    } catch (e) {
+      emit(
+        currentState.copyWith(
+          isRetrying: false,
+          retryFailure: const UnknownFailure(),
+        ),
+      );
     }
   }
 }

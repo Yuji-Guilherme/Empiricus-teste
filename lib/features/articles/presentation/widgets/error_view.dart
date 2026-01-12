@@ -7,12 +7,14 @@ class ErrorView extends StatelessWidget {
   final String message;
   final IconData icon;
   final VoidCallback onRetry;
+  final bool? isLoading;
 
   const ErrorView({
     super.key,
     required this.message,
     required this.onRetry,
     required this.icon,
+    this.isLoading,
   });
 
   @override
@@ -34,8 +36,10 @@ class ErrorView extends StatelessWidget {
             ErrorButton(
               onPress: onRetry,
               icon: Icons.refresh,
+              isLoading: isLoading,
               text: 'Tentar Novamente',
             ),
+            const SizedBox(height: 40),
           ],
         ),
       ),

@@ -9,7 +9,7 @@ void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
-  setupServiceLocator();
+  await setupServiceLocator();
   await sl<AuthService>().checkLoginStatus();
 
   runApp(const MyApp());

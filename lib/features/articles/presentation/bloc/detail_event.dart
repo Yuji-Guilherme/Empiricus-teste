@@ -7,6 +7,15 @@ sealed class ArticleDetailEvent extends Equatable {
 class LoadArticleDetail extends ArticleDetailEvent {
   final String slug;
   const LoadArticleDetail(this.slug);
+
+  @override
+  List<Object> get props => [slug];
+}
+
+class RetryArticleDetail extends ArticleDetailEvent {
+  final String slug;
+  const RetryArticleDetail(this.slug);
+
   @override
   List<Object> get props => [slug];
 }

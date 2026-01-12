@@ -3,6 +3,7 @@ import 'package:empiricus_test/core/components/network_image.dart';
 import 'package:empiricus_test/core/di/service_locator.dart';
 import 'package:empiricus_test/core/theme/app_colors.dart';
 import 'package:empiricus_test/core/theme/app_typography.dart';
+import 'package:empiricus_test/core/utils/app_alert.dart';
 import 'package:empiricus_test/core/utils/failure_extension.dart';
 import 'package:empiricus_test/features/articles/data/models/article_model.dart';
 import 'package:empiricus_test/features/articles/presentation/bloc/detail_bloc.dart';
@@ -43,22 +44,33 @@ class DetailsPage extends StatelessWidget {
             onPressed: () => context.canPop() ? context.pop() : context.go('/'),
           ),
         ),
-        body: BlocBuilder<ArticleDetailBloc, ArticleDetailState>(
+        body: BlocConsumer<ArticleDetailBloc, ArticleDetailState>(
+          listener: (context, state) {
+            if (state is ArticleDetailError && state.retryFailure != null) {
+              AppAlert.show(
+                context,
+                state.retryFailure!.displayMessage,
+                type: .error,
+              );
+            }
+          },
           builder: (context, state) {
             if (article != null) return _buildContent(article!);
 
             return switch (state) {
               ArticleDetailLoading() ||
               ArticleDetailInitial() => DetailSkeleton(),
-              ArticleDetailError(:final failure) => ErrorView(
-                message: failure.displayMessage,
-                icon: failure.icon,
-                onRetry: () {
-                  context.read<ArticleDetailBloc>().add(
-                    LoadArticleDetail(slug),
-                  );
-                },
-              ),
+              ArticleDetailError(:final failure, :final isRetrying) =>
+                ErrorView(
+                  message: failure.displayMessage,
+                  icon: failure.icon,
+                  isLoading: isRetrying,
+                  onRetry: () {
+                    context.read<ArticleDetailBloc>().add(
+                      RetryArticleDetail(slug),
+                    );
+                  },
+                ),
               ArticleDetailNotfound() => DetailNotFound(),
               ArticleDetailLoaded(:final article) => _buildContent(article),
             };
