@@ -35,11 +35,16 @@ class ArticleBloc extends Bloc<ArticleEvent, ArticleState> {
     RefreshArticles event,
     Emitter<ArticleState> emit,
   ) async {
+    final currentState = state;
+    if (currentState is! ArticleLoaded) return;
+
     try {
+      emit(currentState.copyWith(refreshFailure: null));
       final articles = await _repository.getArticles();
+
       emit(ArticleLoaded(articles: articles));
-    } on Failure catch (e) {
-      emit(ArticleError(e));
+    } on Failure catch (failure) {
+      emit(currentState.copyWith(refreshFailure: failure));
     } catch (e) {
       emit(const ArticleError(UnknownFailure()));
     }

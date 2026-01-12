@@ -2,6 +2,7 @@ import 'package:empiricus_test/core/components/app_bar.dart';
 import 'package:empiricus_test/core/di/service_locator.dart';
 import 'package:empiricus_test/core/services/auth_service.dart';
 import 'package:empiricus_test/core/theme/app_colors.dart';
+import 'package:empiricus_test/core/utils/app_alert.dart';
 import 'package:empiricus_test/core/utils/failure_extension.dart';
 import 'package:empiricus_test/features/articles/presentation/bloc/article_bloc.dart';
 import 'package:empiricus_test/features/articles/presentation/bloc/article_event.dart';
@@ -31,7 +32,16 @@ class HomePage extends StatelessWidget {
             },
           ),
         ),
-        body: BlocBuilder<ArticleBloc, ArticleState>(
+        body: BlocConsumer<ArticleBloc, ArticleState>(
+          listener: (context, state) {
+            if (state is ArticleLoaded && state.refreshFailure != null) {
+              AppAlert.show(
+                context,
+                state.refreshFailure!.displayMessage,
+                type: .error,
+              );
+            }
+          },
           builder: (context, state) {
             return switch (state) {
               ArticleLoading() => _buildLoadingList(),
@@ -65,7 +75,13 @@ class HomePage extends StatelessWidget {
 
   Widget _buildArticleList(BuildContext context, List<ArticleModel> articles) {
     if (articles.isEmpty) {
-      return const Center(child: Text('Nenhum artigo encontrado.'));
+      return ErrorView(
+        message: 'Ops! Sem artigos no momento.',
+        icon: Icons.search_off_rounded,
+        onRetry: () {
+          context.read<ArticleBloc>().add(LoadArticles());
+        },
+      );
     }
 
     return RefreshIndicator(

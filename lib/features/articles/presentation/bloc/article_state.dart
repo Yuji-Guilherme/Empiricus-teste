@@ -6,7 +6,7 @@ sealed class ArticleState extends Equatable {
   const ArticleState();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 final class ArticleInitial extends ArticleState {}
@@ -15,11 +15,22 @@ final class ArticleLoading extends ArticleState {}
 
 final class ArticleLoaded extends ArticleState {
   final List<ArticleModel> articles;
+  final Failure? refreshFailure;
 
-  const ArticleLoaded({required this.articles});
+  const ArticleLoaded({required this.articles, this.refreshFailure});
+
+  ArticleLoaded copyWith({
+    List<ArticleModel>? articles,
+    Failure? refreshFailure,
+  }) {
+    return ArticleLoaded(
+      articles: articles ?? this.articles,
+      refreshFailure: refreshFailure,
+    );
+  }
 
   @override
-  List<Object> get props => [articles];
+  List<Object?> get props => [articles, refreshFailure];
 }
 
 final class ArticleError extends ArticleState {
