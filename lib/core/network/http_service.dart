@@ -4,15 +4,15 @@ import 'dart:io';
 import 'package:empiricus_test/core/errors/failures.dart';
 import 'package:http/http.dart' as http;
 
-abstract class IHttpClient {
+abstract class IHttpService {
   Future<dynamic> get();
 }
 
-class HttpClientImplementation implements IHttpClient {
+class HttpServiceImpl implements IHttpService {
   final http.Client _client;
   final String _baseUrl;
 
-  HttpClientImplementation({http.Client? client, required String baseUrl})
+  HttpServiceImpl({http.Client? client, required String baseUrl})
     : _client = client ?? http.Client(),
       _baseUrl = baseUrl;
 

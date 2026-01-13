@@ -1,4 +1,4 @@
-import 'package:empiricus_test/core/network/http_client.dart';
+import 'package:empiricus_test/core/network/http_service.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:empiricus_test/core/network/network_info.dart';
 import 'package:empiricus_test/features/auth/domain/repositories/auth_repository.dart';
@@ -13,4 +13,4 @@ class MockAuthService extends Mock implements AuthService {}
 
 class MockFlutterSecureStorage extends Mock implements FlutterSecureStorage {}
 
-class MockHttpClient extends Mock implements IHttpClient {}
+class MockHttpService extends Mock implements IHttpService {}

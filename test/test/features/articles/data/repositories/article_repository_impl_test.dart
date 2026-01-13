@@ -8,14 +8,14 @@ import '../../../../../mocks.dart';
 
 void main() {
   late ArticleRepositoryImpl repository;
-  late MockHttpClient mockHttpClient;
+  late MockHttpService mockHttpService;
   late MockNetworkInfo mockNetworkInfo;
 
   setUp(() {
-    mockHttpClient = MockHttpClient();
+    mockHttpService = MockHttpService();
     mockNetworkInfo = MockNetworkInfo();
     repository = ArticleRepositoryImpl(
-      client: mockHttpClient,
+      client: mockHttpService,
       networkInfo: mockNetworkInfo,
     );
   });
@@ -44,7 +44,7 @@ void main() {
       'getArticles: Deve verificar a conexão de rede antes de chamar a API',
       () async {
         when(() => mockNetworkInfo.isConnected).thenAnswer((_) async => true);
-        when(() => mockHttpClient.get()).thenAnswer((_) async => tResponseMap);
+        when(() => mockHttpService.get()).thenAnswer((_) async => tResponseMap);
 
         await repository.getArticles();
 
@@ -58,7 +58,7 @@ void main() {
         when(() => mockNetworkInfo.isConnected).thenAnswer((_) async => false);
 
         expect(() => repository.getArticles(), throwsA(isA<NetworkFailure>()));
-        verifyZeroInteractions(mockHttpClient);
+        verifyZeroInteractions(mockHttpService);
       },
     );
 
@@ -66,7 +66,7 @@ void main() {
       'getArticles: Deve retornar Lista de Artigos quando a API responder com sucesso',
       () async {
         when(() => mockNetworkInfo.isConnected).thenAnswer((_) async => true);
-        when(() => mockHttpClient.get()).thenAnswer((_) async => tResponseMap);
+        when(() => mockHttpService.get()).thenAnswer((_) async => tResponseMap);
 
         final result = await repository.getArticles();
 
@@ -80,7 +80,7 @@ void main() {
       'getArticles: Deve lançar DataParsingFailure se a resposta não for um Map',
       () async {
         when(() => mockNetworkInfo.isConnected).thenAnswer((_) async => true);
-        when(() => mockHttpClient.get()).thenAnswer((_) async => []);
+        when(() => mockHttpService.get()).thenAnswer((_) async => []);
 
         expect(
           () => repository.getArticles(),
@@ -102,7 +102,7 @@ void main() {
           ],
         };
 
-        when(() => mockHttpClient.get()).thenAnswer((_) async => tBadJson);
+        when(() => mockHttpService.get()).thenAnswer((_) async => tBadJson);
 
         expect(() => repository.getArticles(), throwsA(isA<Failure>()));
       },
@@ -112,7 +112,7 @@ void main() {
       'getArticleBySlug: Deve retornar o artigo correto quando encontrar o slug',
       () async {
         when(() => mockNetworkInfo.isConnected).thenAnswer((_) async => true);
-        when(() => mockHttpClient.get()).thenAnswer((_) async => tResponseMap);
+        when(() => mockHttpService.get()).thenAnswer((_) async => tResponseMap);
 
         final result = await repository.getArticleBySlug('slug-teste');
 
@@ -124,7 +124,7 @@ void main() {
       'getArticleBySlug: Deve lançar ServerFailure(404) quando o slug não existir na lista',
       () async {
         when(() => mockNetworkInfo.isConnected).thenAnswer((_) async => true);
-        when(() => mockHttpClient.get()).thenAnswer((_) async => tResponseMap);
+        when(() => mockHttpService.get()).thenAnswer((_) async => tResponseMap);
 
         expect(
           () => repository.getArticleBySlug('slug-inexistente'),
@@ -142,7 +142,7 @@ void main() {
           message: 'Internal Error',
         );
 
-        when(() => mockHttpClient.get()).thenThrow(tFailure);
+        when(() => mockHttpService.get()).thenThrow(tFailure);
 
         expect(
           () => repository.getArticleBySlug('slug-teste'),

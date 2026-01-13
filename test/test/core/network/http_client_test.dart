@@ -10,16 +10,13 @@ import 'package:empiricus_test/core/network/http_client.dart';
 class MockClient extends Mock implements http.Client {}
 
 void main() {
-  late HttpClientImplementation httpClient;
+  late HttpServiceImpl httpClient;
   late MockClient mockClient;
   const tBaseUrl = 'https://api.teste.com';
 
   setUp(() {
     mockClient = MockClient();
-    httpClient = HttpClientImplementation(
-      client: mockClient,
-      baseUrl: tBaseUrl,
-    );
+    httpClient = HttpServiceImpl(client: mockClient, baseUrl: tBaseUrl);
 
     registerFallbackValue(Uri.parse(tBaseUrl));
   });

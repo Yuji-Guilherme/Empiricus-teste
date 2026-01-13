@@ -24,8 +24,8 @@ Future<void> setupServiceLocator() async {
 
   sl.registerLazySingleton<NetworkInfo>(() => NetworkInfo(sl()));
 
-  sl.registerLazySingleton<IHttpClient>(
-    () => HttpClientImplementation(baseUrl: ApiConstants.baseUrl),
+  sl.registerLazySingleton<IHttpService>(
+    () => HttpServiceImpl(baseUrl: ApiConstants.baseUrl),
   );
 
   sl.registerLazySingleton<AuthService>(() => AuthService(storage: sl()));
