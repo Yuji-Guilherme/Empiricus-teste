@@ -35,7 +35,6 @@ void main() {
     message: 'Não encontrado',
     statusCode: 404,
   );
-  final tNetworkFailure = NetworkFailure();
 
   setUp(() {
     mockRepository = MockArticleRepository();
@@ -113,22 +112,39 @@ void main() {
       );
 
       blocTest<ArticleDetailBloc, ArticleDetailState>(
-        'Deve emitir [Error(isRetrying: true), Error(retryFailure: failure)] ao falhar novamente',
-        seed: () => ArticleDetailError(tServerFailure),
+        'Deve manter o erro original e setar retryFailure se o erro for o mesmo',
+        seed: () => const ArticleDetailError(NetworkFailure()),
         build: () {
           when(
             () => mockRepository.getArticleBySlug(tSlug),
-          ).thenThrow(tNetworkFailure);
+          ).thenThrow(const NetworkFailure());
           return bloc;
         },
         act: (bloc) => bloc.add(const RetryArticleDetail(tSlug)),
         expect: () => [
-          ArticleDetailError(tServerFailure, isRetrying: true),
-          ArticleDetailError(
-            tServerFailure,
+          const ArticleDetailError(NetworkFailure(), isRetrying: true),
+          const ArticleDetailError(
+            NetworkFailure(),
             isRetrying: false,
-            retryFailure: tNetworkFailure,
+            retryFailure: NetworkFailure(),
           ),
+        ],
+      );
+
+      blocTest<ArticleDetailBloc, ArticleDetailState>(
+        'Deve mudar para Notfound se o erro mudar para 404 durante o retry',
+        seed: () => const ArticleDetailError(NetworkFailure()),
+        build: () {
+          when(
+            () => mockRepository.getArticleBySlug(tSlug),
+          ).thenThrow(ServerFailure(statusCode: 404));
+          return bloc;
+        },
+        act: (bloc) => bloc.add(const RetryArticleDetail(tSlug)),
+        expect: () => [
+          const ArticleDetailError(NetworkFailure(), isRetrying: true),
+          // Como mudou o tipo de erro drasticamente, trocamos o estado base
+          ArticleDetailNotfound(),
         ],
       );
 

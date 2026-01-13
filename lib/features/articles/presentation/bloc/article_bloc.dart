@@ -64,6 +64,8 @@ class ArticleBloc extends Bloc<ArticleEvent, ArticleState> {
 
       emit(ArticleLoaded(articles: articles));
     } on Failure catch (failure) {
+      if (currentState.failure != failure) return emit(ArticleError(failure));
+
       emit(currentState.copyWith(isRetrying: false, retryFailure: failure));
     } catch (e) {
       emit(

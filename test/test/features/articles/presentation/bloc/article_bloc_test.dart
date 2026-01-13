@@ -111,7 +111,7 @@ void main() {
     );
   });
 
-  group('ReloadArticles (Tentativa de Recuperação na Tela de Erro)', () {
+  group('RetryArticles (Tentativa de Recuperação na Tela de Erro)', () {
     blocTest<ArticleBloc, ArticleState>(
       'Deve emitir [Error(isRetrying: true), Loaded] quando a recuperação funcionar',
       seed: () => ArticleError(tFailure),
@@ -129,8 +129,8 @@ void main() {
     );
 
     blocTest<ArticleBloc, ArticleState>(
-      'Deve emitir [Error(isRetrying: true), Error(retryFailure: failure)] quando falhar novamente',
-      seed: () => ArticleError(tFailure),
+      'Deve apenas atualizar retryFailure quando o erro persistir for IGUAL',
+      seed: () => const ArticleError(NetworkFailure()),
       build: () {
         when(
           () => mockRepository.getArticles(),
@@ -139,13 +139,30 @@ void main() {
       },
       act: (bloc) => bloc.add(RetryArticles()),
       expect: () => [
-        ArticleError(tFailure, isRetrying: true, retryFailure: null),
+        const ArticleError(NetworkFailure(), isRetrying: true),
 
-        ArticleError(
-          tFailure,
+        const ArticleError(
+          NetworkFailure(),
           isRetrying: false,
-          retryFailure: const NetworkFailure(),
+          retryFailure: NetworkFailure(),
         ),
+      ],
+    );
+
+    blocTest<ArticleBloc, ArticleState>(
+      'Deve emitir NOVO ArticleError quando o erro for DIFERENTE',
+      seed: () => const ArticleError(NetworkFailure()),
+      build: () {
+        when(
+          () => mockRepository.getArticles(),
+        ).thenThrow(ServerFailure(statusCode: 500));
+        return bloc;
+      },
+      act: (bloc) => bloc.add(RetryArticles()),
+      expect: () => [
+        const ArticleError(NetworkFailure(), isRetrying: true),
+
+        ArticleError(ServerFailure(statusCode: 500)),
       ],
     );
 

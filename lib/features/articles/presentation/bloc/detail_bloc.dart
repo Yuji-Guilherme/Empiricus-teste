@@ -48,10 +48,14 @@ class ArticleDetailBloc extends Bloc<ArticleDetailEvent, ArticleDetailState> {
       emit(ArticleDetailLoaded(article));
     } on Failure catch (failure) {
       if (failure case ServerFailure(statusCode: 404)) {
-        emit(ArticleDetailNotfound());
-      } else {
-        emit(currentState.copyWith(isRetrying: false, retryFailure: failure));
+        return emit(ArticleDetailNotfound());
       }
+
+      if (currentState.failure != failure) {
+        return emit(ArticleDetailError(failure));
+      }
+
+      emit(currentState.copyWith(isRetrying: false, retryFailure: failure));
     } catch (e) {
       emit(
         currentState.copyWith(
