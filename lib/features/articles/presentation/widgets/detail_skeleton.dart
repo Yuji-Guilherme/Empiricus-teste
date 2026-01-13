@@ -29,7 +29,7 @@ class DetailSkeleton extends StatelessWidget {
             baseColor: AppColors.lightGrey,
             highlightColor: AppColors.offWhite,
             child: Container(
-              width: double.infinity,
+              width: .infinity,
               height: 28,
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -73,7 +73,7 @@ class DetailSkeleton extends StatelessWidget {
               baseColor: AppColors.lightGrey,
               highlightColor: AppColors.offWhite,
               child: Container(
-                width: double.infinity,
+                width: .infinity,
                 height: 20,
                 decoration: BoxDecoration(
                   color: Colors.white,

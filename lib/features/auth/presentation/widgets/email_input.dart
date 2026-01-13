@@ -63,11 +63,6 @@ class _EmailInputState extends State<EmailInput> {
           });
         }
       },
-      validator: (value) {
-        if (value == null || value.isEmpty) return 'Campo obrigatório';
-        if (!Validators.isValidEmail(value)) return 'E-mail inválido';
-        return null;
-      },
     );
   }
 }

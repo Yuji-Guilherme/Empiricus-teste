@@ -1,3 +1,4 @@
+import 'package:empiricus_test/features/articles/domain/entities/article_entity.dart';
 import 'package:equatable/equatable.dart';
 
 sealed class ArticleDetailEvent extends Equatable {
@@ -6,10 +7,12 @@ sealed class ArticleDetailEvent extends Equatable {
 
 class LoadArticleDetail extends ArticleDetailEvent {
   final String slug;
-  const LoadArticleDetail(this.slug);
+  final ArticleEntity? article;
+
+  const LoadArticleDetail(this.slug, {this.article});
 
   @override
-  List<Object> get props => [slug];
+  List<Object?> get props => [slug, article];
 }
 
 class RetryArticleDetail extends ArticleDetailEvent {

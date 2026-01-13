@@ -143,7 +143,6 @@ void main() {
         act: (bloc) => bloc.add(const RetryArticleDetail(tSlug)),
         expect: () => [
           const ArticleDetailError(NetworkFailure(), isRetrying: true),
-          // Como mudou o tipo de erro drasticamente, trocamos o estado base
           ArticleDetailNotfound(),
         ],
       );
@@ -176,4 +175,15 @@ void main() {
       );
     });
   });
+
+  test(
+    'Deve emitir Loaded IMEDIATAMENTE sem chamar o repo se o evento tiver article',
+    () {
+      bloc.add(LoadArticleDetail(tSlug, article: tArticle));
+
+      expectLater(bloc.stream, emits(ArticleDetailLoaded(tArticle)));
+
+      verifyNever(() => mockRepository.getArticleBySlug(any()));
+    },
+  );
 }

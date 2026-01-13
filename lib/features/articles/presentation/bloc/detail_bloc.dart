@@ -18,6 +18,10 @@ class ArticleDetailBloc extends Bloc<ArticleDetailEvent, ArticleDetailState> {
     LoadArticleDetail event,
     Emitter<ArticleDetailState> emit,
   ) async {
+    if (event.article != null) {
+      return emit(ArticleDetailLoaded(event.article!));
+    }
+
     emit(ArticleDetailLoading());
     try {
       final article = await _repository.getArticleBySlug(event.slug);

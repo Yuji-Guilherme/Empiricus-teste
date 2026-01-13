@@ -27,12 +27,9 @@ class DetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) {
-        final bloc = sl<ArticleDetailBloc>();
-        if (article == null) bloc.add(LoadArticleDetail(slug));
-
-        return bloc;
-      },
+      create: (_) =>
+          sl<ArticleDetailBloc>()
+            ..add(LoadArticleDetail(slug, article: article)),
       child: Scaffold(
         appBar: CustomAppBar(
           actionWidget: IconButton(
@@ -55,11 +52,9 @@ class DetailsPage extends StatelessWidget {
             }
           },
           builder: (context, state) {
-            if (article != null) return _buildContent(article!);
-
             return switch (state) {
               ArticleDetailLoading() ||
-              ArticleDetailInitial() => DetailSkeleton(),
+              ArticleDetailInitial() => const DetailSkeleton(),
               ArticleDetailError(:final failure, :final isRetrying) =>
                 ErrorView(
                   message: failure.displayMessage,
@@ -71,7 +66,7 @@ class DetailsPage extends StatelessWidget {
                     );
                   },
                 ),
-              ArticleDetailNotfound() => DetailNotFound(),
+              ArticleDetailNotfound() => const DetailNotFound(),
               ArticleDetailLoaded(:final article) => _buildContent(article),
             };
           },
@@ -103,7 +98,7 @@ class DetailsPage extends StatelessWidget {
               borderRadius: .circular(6),
               child: AppNetworkImage(
                 imageUrl: article.imageLarge,
-                width: double.infinity,
+                width: .infinity,
                 height: 190,
               ),
             ),

@@ -74,7 +74,6 @@ class _LoginFormState extends State<_LoginForm> {
 
   void _onLoginSuccess() {
     FocusScope.of(context).unfocus();
-    debugPrint(widget.redirectUrl);
     if (widget.redirectUrl == null) return context.go('/');
 
     context.go(widget.redirectUrl!);
@@ -105,7 +104,7 @@ class _LoginFormState extends State<_LoginForm> {
           child: Scaffold(
             body: Center(
               child: SingleChildScrollView(
-                padding: const EdgeInsets.symmetric(horizontal: 32),
+                padding: const .symmetric(horizontal: 32),
                 child: Column(
                   crossAxisAlignment: .start,
                   children: [

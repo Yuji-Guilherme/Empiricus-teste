@@ -24,7 +24,7 @@ void main() {
   late MockArticleDetailBloc mockBloc;
 
   const tSlug = 'slug-teste';
-  final tArticle = ArticleEntity(
+  const tArticle = ArticleEntity(
     slug: tSlug,
     name: 'Artigo Detalhado',
     shortDescription: 'Short',
@@ -35,8 +35,21 @@ void main() {
     features: [],
   );
 
+  const tFallbackArticle = ArticleEntity(
+    slug: 'fallback',
+    name: 'Fallback',
+    shortDescription: '',
+    description: '',
+    imageLarge: '',
+    imageSmall: '',
+    authors: [],
+    features: [],
+  );
+
   setUpAll(() {
-    registerFallbackValue(const LoadArticleDetail('fallback-slug'));
+    registerFallbackValue(
+      const LoadArticleDetail('fallback-slug', article: tFallbackArticle),
+    );
   });
 
   setUp(() {
@@ -93,16 +106,18 @@ void main() {
     );
 
     testWidgets(
-      'Deve exibir conteúdo IMEDIATAMENTE e NÃO disparar Load se article for passado',
+      'Deve disparar LoadArticleDetail PASSANDO o artigo para o Bloc processar',
       (tester) async {
-        when(() => mockBloc.state).thenReturn(ArticleDetailInitial());
+        when(() => mockBloc.state).thenReturn(ArticleDetailLoaded(tArticle));
 
         await loadDetailsPage(tester, slug: tSlug, article: tArticle);
         await tester.pump();
 
         expect(find.text('Artigo Detalhado'), findsOneWidget);
 
-        verifyNever(() => mockBloc.add(any()));
+        verify(
+          () => mockBloc.add(LoadArticleDetail(tSlug, article: tArticle)),
+        ).called(1);
       },
     );
 

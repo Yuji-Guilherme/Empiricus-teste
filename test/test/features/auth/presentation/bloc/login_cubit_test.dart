@@ -1,7 +1,7 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:empiricus_test/core/errors/failures.dart';
 import 'package:empiricus_test/core/utils/failure_extension.dart';
-import 'package:empiricus_test/features/auth/domain/usecases/login_case.dart'; // Ajuste o import conforme seu projeto
+import 'package:empiricus_test/features/auth/domain/usecases/login_case.dart';
 import 'package:empiricus_test/features/auth/presentation/bloc/login_cubit.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
