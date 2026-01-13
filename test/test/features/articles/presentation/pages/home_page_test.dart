@@ -62,7 +62,6 @@ void main() {
 
       await loadHomePage(tester);
 
-      // Assert
       expect(find.byType(ArticleCardSkeleton), findsWidgets);
       expect(find.byType(ArticleCard), findsNothing);
     });
@@ -70,13 +69,10 @@ void main() {
     testWidgets('Deve exibir lista de Artigos quando estado for Loaded', (
       tester,
     ) async {
-      // Arrange
       when(() => mockBloc.state).thenReturn(ArticleLoaded(articles: tArticles));
 
-      // Act
       await loadHomePage(tester);
 
-      // Assert
       expect(find.byType(ArticleCard), findsOneWidget);
       expect(find.text('Artigo Teste'), findsOneWidget);
       expect(find.text('Descricao curta'), findsOneWidget);
@@ -105,7 +101,6 @@ void main() {
 
         await loadHomePage(tester);
 
-        // Assert Visual
         expect(find.byType(ErrorView), findsOneWidget);
 
         await tester.tap(find.text('Tentar Novamente'));

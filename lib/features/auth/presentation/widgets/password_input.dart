@@ -15,6 +15,7 @@ class _PasswordInputState extends State<PasswordInput> {
   final FocusNode _focusNode = FocusNode();
   String? _errorText;
   bool _obscureText = true;
+  bool _hasTyped = false;
 
   @override
   void initState() {
@@ -30,7 +31,7 @@ class _PasswordInputState extends State<PasswordInput> {
         setState(() {
           _errorText = 'Mínimo 6 caracteres';
         });
-      } else if (text.isEmpty) {
+      } else if (text.isEmpty && _hasTyped) {
         setState(() {
           _errorText = 'Campo obrigatório';
         });
@@ -67,6 +68,8 @@ class _PasswordInputState extends State<PasswordInput> {
         if (widget.onSubmitted != null) widget.onSubmitted!();
       },
       onChanged: (value) {
+        if (!_hasTyped) _hasTyped = true;
+
         if (_errorText != null) {
           setState(() {
             _errorText = null;

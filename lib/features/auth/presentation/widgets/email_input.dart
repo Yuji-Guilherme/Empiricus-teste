@@ -13,6 +13,7 @@ class EmailInput extends StatefulWidget {
 class _EmailInputState extends State<EmailInput> {
   final FocusNode _focusNode = FocusNode();
   String? _errorText;
+  bool _hasTyped = false;
 
   @override
   void initState() {
@@ -24,7 +25,7 @@ class _EmailInputState extends State<EmailInput> {
     if (!_focusNode.hasFocus) {
       final text = widget.controller.text;
 
-      if (text.isEmpty) {
+      if (text.isEmpty && _hasTyped) {
         setState(() {
           _errorText = 'Campo obrigatório';
         });
@@ -57,6 +58,8 @@ class _EmailInputState extends State<EmailInput> {
         errorText: _errorText,
       ),
       onChanged: (_) {
+        if (!_hasTyped) _hasTyped = true;
+
         if (_errorText != null) {
           setState(() {
             _errorText = null;
