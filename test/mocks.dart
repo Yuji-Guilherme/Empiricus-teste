@@ -1,4 +1,4 @@
-import 'package:empiricus_test/core/network/http_service.dart';
+import 'package:empiricus_test/core/network/http_adapter.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:empiricus_test/core/network/network_info.dart';
 import 'package:empiricus_test/features/auth/domain/repositories/auth_repository.dart';

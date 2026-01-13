@@ -1,5 +1,5 @@
 import 'package:empiricus_test/core/errors/failures.dart';
-import 'package:empiricus_test/core/network/http_service.dart';
+import 'package:empiricus_test/core/network/http_adapter.dart';
 import 'package:empiricus_test/core/network/network_info.dart';
 import 'package:empiricus_test/features/articles/data/models/article_response_model.dart';
 import 'package:empiricus_test/features/articles/domain/entities/article_entity.dart';

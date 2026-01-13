@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:empiricus_test/core/errors/failures.dart';
-import 'package:empiricus_test/core/network/http_service.dart';
+import 'package:empiricus_test/core/network/http_adapter.dart';
 
 class MockClient extends Mock implements http.Client {}
 

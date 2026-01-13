@@ -1,5 +1,5 @@
 import 'package:empiricus_test/core/constants/api_constants.dart';
-import 'package:empiricus_test/core/network/http_service.dart';
+import 'package:empiricus_test/core/network/http_adapter.dart';
 import 'package:empiricus_test/core/network/network_info.dart';
 import 'package:empiricus_test/core/services/auth_service.dart';
 import 'package:empiricus_test/features/articles/presentation/bloc/article_bloc.dart';
