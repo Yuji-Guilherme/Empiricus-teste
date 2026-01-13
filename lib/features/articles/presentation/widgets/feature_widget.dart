@@ -1,11 +1,11 @@
 import 'package:empiricus_test/core/theme/app_colors.dart';
 import 'package:empiricus_test/core/theme/app_typography.dart';
 import 'package:empiricus_test/core/utils/app_alert.dart';
-import 'package:empiricus_test/features/articles/data/models/feature_model.dart';
+import 'package:empiricus_test/features/articles/domain/entities/feature_entity.dart';
 import 'package:flutter/material.dart';
 
 class FeatureWidget extends StatelessWidget {
-  final FeatureModel feature;
+  final FeatureEntity feature;
 
   const FeatureWidget({super.key, required this.feature});
 

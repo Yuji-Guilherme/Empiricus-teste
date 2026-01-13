@@ -1,7 +1,7 @@
 import 'package:empiricus_test/core/di/service_locator.dart';
 import 'package:empiricus_test/core/services/auth_service.dart';
 import 'package:empiricus_test/core/utils/snackbar_observer.dart';
-import 'package:empiricus_test/features/articles/data/models/article_model.dart';
+import 'package:empiricus_test/features/articles/domain/entities/article_entity.dart';
 import 'package:empiricus_test/features/articles/presentation/pages/details_page.dart';
 import 'package:empiricus_test/features/articles/presentation/pages/home_page.dart';
 import 'package:empiricus_test/features/auth/presentation/pages/login_page.dart';
@@ -53,7 +53,7 @@ class AppRouter {
         },
         builder: (context, state) {
           final slug = state.pathParameters['slug']!;
-          final article = state.extra as ArticleModel?;
+          final article = state.extra as ArticleEntity?;
 
           return DetailsPage(slug: slug, article: article);
         },

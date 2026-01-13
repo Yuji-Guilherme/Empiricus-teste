@@ -1,8 +1,8 @@
 import 'package:empiricus_test/core/errors/failures.dart';
 import 'package:empiricus_test/core/network/http_client.dart';
 import 'package:empiricus_test/core/network/network_info.dart';
-import 'package:empiricus_test/features/articles/data/models/article_model.dart';
 import 'package:empiricus_test/features/articles/data/models/article_response_model.dart';
+import 'package:empiricus_test/features/articles/domain/entities/article_entity.dart';
 import 'package:empiricus_test/features/articles/domain/repositories/article_repository.dart';
 
 class ArticleRepositoryImpl implements IArticleRepository {
@@ -16,7 +16,7 @@ class ArticleRepositoryImpl implements IArticleRepository {
        _networkInfo = networkInfo;
 
   @override
-  Future<List<ArticleModel>> getArticles() async {
+  Future<List<ArticleEntity>> getArticles() async {
     if (!await _networkInfo.isConnected) {
       throw const NetworkFailure();
     }
@@ -38,12 +38,12 @@ class ArticleRepositoryImpl implements IArticleRepository {
   }
 
   @override
-  Future<ArticleModel> getArticleBySlug(String slug) async {
+  Future<ArticleEntity> getArticleBySlug(String slug) async {
     try {
       final response = await getArticles();
 
       return response.firstWhere(
-        (article) => article.identifier.slug == slug,
+        (article) => article.slug == slug,
         orElse: () => throw const ServerFailure(statusCode: 404),
       );
     } catch (e) {

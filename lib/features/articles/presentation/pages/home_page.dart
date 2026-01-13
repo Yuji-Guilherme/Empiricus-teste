@@ -4,10 +4,10 @@ import 'package:empiricus_test/core/services/auth_service.dart';
 import 'package:empiricus_test/core/theme/app_colors.dart';
 import 'package:empiricus_test/core/utils/app_alert.dart';
 import 'package:empiricus_test/core/utils/failure_extension.dart';
+import 'package:empiricus_test/features/articles/domain/entities/article_entity.dart';
 import 'package:empiricus_test/features/articles/presentation/bloc/article_bloc.dart';
 import 'package:empiricus_test/features/articles/presentation/bloc/article_event.dart';
 import 'package:empiricus_test/features/articles/presentation/bloc/article_state.dart';
-import 'package:empiricus_test/features/articles/data/models/article_model.dart';
 import 'package:empiricus_test/features/articles/presentation/widgets/article_card.dart';
 import 'package:empiricus_test/features/articles/presentation/widgets/article_card_skeleton.dart';
 import 'package:empiricus_test/features/articles/presentation/widgets/error_view.dart';
@@ -82,7 +82,7 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget _buildArticleList(BuildContext context, List<ArticleModel> articles) {
+  Widget _buildArticleList(BuildContext context, List<ArticleEntity> articles) {
     if (articles.isEmpty) {
       return ErrorView(
         message: 'Ops! Sem artigos no momento.',
@@ -112,7 +112,7 @@ class HomePage extends StatelessWidget {
             onTap: () {
               context.pushNamed(
                 'details',
-                pathParameters: {'slug': article.identifier.slug},
+                pathParameters: {'slug': article.slug},
                 extra: article,
               );
             },

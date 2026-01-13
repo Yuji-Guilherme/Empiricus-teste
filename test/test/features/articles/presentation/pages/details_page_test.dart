@@ -4,7 +4,7 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:empiricus_test/core/di/service_locator.dart';
 import 'package:empiricus_test/core/errors/failures.dart';
 import 'package:empiricus_test/core/utils/failure_extension.dart';
-import 'package:empiricus_test/features/articles/data/models/article_model.dart';
+import 'package:empiricus_test/features/articles/domain/entities/article_entity.dart';
 import 'package:empiricus_test/features/articles/presentation/bloc/detail_bloc.dart';
 import 'package:empiricus_test/features/articles/presentation/bloc/detail_event.dart';
 import 'package:empiricus_test/features/articles/presentation/bloc/detail_state.dart';
@@ -24,8 +24,8 @@ void main() {
   late MockArticleDetailBloc mockBloc;
 
   const tSlug = 'slug-teste';
-  final tArticle = ArticleModel(
-    identifier: const ArticleIdentifier(slug: tSlug),
+  final tArticle = ArticleEntity(
+    slug: tSlug,
     name: 'Artigo Detalhado',
     shortDescription: 'Short',
     description: 'Long description content...',
@@ -52,7 +52,7 @@ void main() {
   Future<void> loadDetailsPage(
     WidgetTester tester, {
     String slug = tSlug,
-    ArticleModel? article,
+    ArticleEntity? article,
   }) async {
     await tester.pumpWidget(
       MaterialApp(

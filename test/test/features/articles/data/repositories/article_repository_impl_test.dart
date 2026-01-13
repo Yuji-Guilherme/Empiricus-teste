@@ -1,8 +1,8 @@
+import 'package:empiricus_test/features/articles/domain/entities/article_entity.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:empiricus_test/core/errors/failures.dart';
 import 'package:empiricus_test/features/articles/data/repositories/article_repository_impl.dart';
-import 'package:empiricus_test/features/articles/data/models/article_model.dart';
 
 import '../../../../../mocks.dart';
 
@@ -70,7 +70,7 @@ void main() {
 
         final result = await repository.getArticles();
 
-        expect(result, isA<List<ArticleModel>>());
+        expect(result, isA<List<ArticleEntity>>());
         expect(result.length, 1);
         expect(result.first.name, jsonName);
       },
@@ -116,7 +116,7 @@ void main() {
 
         final result = await repository.getArticleBySlug('slug-teste');
 
-        expect(result.identifier.slug, 'slug-teste');
+        expect(result.slug, 'slug-teste');
       },
     );
 

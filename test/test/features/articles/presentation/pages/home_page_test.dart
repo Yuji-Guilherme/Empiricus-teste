@@ -5,7 +5,7 @@ import 'package:empiricus_test/core/di/service_locator.dart';
 import 'package:empiricus_test/core/errors/failures.dart';
 import 'package:empiricus_test/core/services/auth_service.dart';
 import 'package:empiricus_test/core/utils/failure_extension.dart';
-import 'package:empiricus_test/features/articles/data/models/article_model.dart';
+import 'package:empiricus_test/features/articles/domain/entities/article_entity.dart';
 import 'package:empiricus_test/features/articles/presentation/bloc/article_bloc.dart';
 import 'package:empiricus_test/features/articles/presentation/bloc/article_event.dart';
 import 'package:empiricus_test/features/articles/presentation/bloc/article_state.dart';
@@ -26,8 +26,8 @@ void main() {
   late MockArticleBloc mockBloc;
   late MockAuthService mockAuthService;
 
-  final tArticle = ArticleModel(
-    identifier: const ArticleIdentifier(slug: 'slug-1'),
+  final tArticle = ArticleEntity(
+    slug: 'slug-1',
     name: 'Artigo Teste',
     shortDescription: 'Descricao curta',
     description: 'Full',

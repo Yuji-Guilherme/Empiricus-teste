@@ -1,6 +1,6 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:empiricus_test/core/errors/failures.dart';
-import 'package:empiricus_test/features/articles/data/models/article_model.dart';
+import 'package:empiricus_test/features/articles/domain/entities/article_entity.dart';
 import 'package:empiricus_test/features/articles/domain/repositories/article_repository.dart';
 import 'package:empiricus_test/features/articles/presentation/bloc/detail_bloc.dart';
 import 'package:empiricus_test/features/articles/presentation/bloc/detail_event.dart';
@@ -16,8 +16,8 @@ void main() {
 
   const tSlug = 'slug-teste';
 
-  const tArticle = ArticleModel(
-    identifier: ArticleIdentifier(slug: tSlug),
+  const tArticle = ArticleEntity(
+    slug: tSlug,
     name: 'Artigo Teste',
     shortDescription: 'Short',
     description: 'Long',

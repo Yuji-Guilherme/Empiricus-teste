@@ -1,5 +1,5 @@
 import 'package:empiricus_test/core/errors/failures.dart';
-import 'package:empiricus_test/features/articles/data/models/article_model.dart';
+import 'package:empiricus_test/features/articles/domain/entities/article_entity.dart';
 import 'package:equatable/equatable.dart';
 
 sealed class ArticleDetailState extends Equatable {
@@ -13,7 +13,7 @@ final class ArticleDetailInitial extends ArticleDetailState {}
 final class ArticleDetailLoading extends ArticleDetailState {}
 
 final class ArticleDetailLoaded extends ArticleDetailState {
-  final ArticleModel article;
+  final ArticleEntity article;
   const ArticleDetailLoaded(this.article);
 
   @override

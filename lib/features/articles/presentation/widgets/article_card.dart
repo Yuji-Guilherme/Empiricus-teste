@@ -1,10 +1,10 @@
 import 'package:empiricus_test/core/theme/app_typography.dart';
-import 'package:empiricus_test/features/articles/data/models/article_model.dart';
 import 'package:empiricus_test/core/components/network_image.dart';
+import 'package:empiricus_test/features/articles/domain/entities/article_entity.dart';
 import 'package:flutter/material.dart';
 
 class ArticleCard extends StatelessWidget {
-  final ArticleModel article;
+  final ArticleEntity article;
   final VoidCallback onTap;
 
   const ArticleCard({super.key, required this.article, required this.onTap});
@@ -55,7 +55,7 @@ class ArticleCard extends StatelessWidget {
               Align(
                 alignment: .center,
                 child: Hero(
-                  tag: article.identifier.slug,
+                  tag: article.slug,
                   child: ClipRRect(
                     borderRadius: .circular(4),
                     child: AppNetworkImage(

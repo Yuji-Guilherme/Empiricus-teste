@@ -1,7 +1,7 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:empiricus_test/core/errors/failures.dart';
-import 'package:empiricus_test/features/articles/data/models/article_model.dart';
 import 'package:empiricus_test/features/articles/data/models/feature_model.dart';
+import 'package:empiricus_test/features/articles/domain/entities/article_entity.dart';
 import 'package:empiricus_test/features/articles/domain/repositories/article_repository.dart';
 import 'package:empiricus_test/features/articles/presentation/bloc/article_bloc.dart';
 import 'package:empiricus_test/features/articles/presentation/bloc/article_event.dart';
@@ -15,8 +15,8 @@ void main() {
   late ArticleBloc bloc;
   late MockArticleRepository mockRepository;
 
-  const tArticle = ArticleModel(
-    identifier: ArticleIdentifier(slug: 'slug-teste'),
+  const tArticle = ArticleEntity(
+    slug: 'slug-teste',
     name: 'Artigo Teste',
     shortDescription: 'Short Desc',
     description: 'Full Desc',

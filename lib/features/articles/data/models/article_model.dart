@@ -1,3 +1,4 @@
+import 'package:empiricus_test/features/articles/domain/entities/article_entity.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'author_model.dart';
 import 'feature_model.dart';
@@ -5,28 +6,25 @@ import 'feature_model.dart';
 part 'article_model.g.dart';
 
 @JsonSerializable(explicitToJson: true)
-class ArticleModel {
-  final ArticleIdentifier identifier;
+class ArticleModel extends ArticleEntity {
+  @JsonKey(name: 'identifier')
+  final ArticleIdentifier identifierModel;
 
-  final String name;
-  final String shortDescription;
-  final String description;
-  final String imageLarge;
-  final String imageSmall;
-
+  @override
   final List<AuthorModel> authors;
+  @override
   final List<FeatureModel> features;
 
-  const ArticleModel({
-    required this.identifier,
-    required this.name,
-    required this.shortDescription,
-    required this.description,
-    required this.imageLarge,
-    required this.imageSmall,
+  ArticleModel({
+    required this.identifierModel,
+    required super.name,
+    required super.shortDescription,
+    required super.description,
+    required super.imageLarge,
+    required super.imageSmall,
     this.authors = const [],
     this.features = const [],
-  });
+  }) : super(slug: identifierModel.slug, authors: authors, features: features);
 
   factory ArticleModel.fromJson(Map<String, dynamic> json) =>
       _$ArticleModelFromJson(json);

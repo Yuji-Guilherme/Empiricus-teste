@@ -1,5 +1,5 @@
 import 'package:empiricus_test/core/errors/failures.dart';
-import 'package:empiricus_test/features/articles/data/models/article_model.dart';
+import 'package:empiricus_test/features/articles/domain/entities/article_entity.dart';
 import 'package:equatable/equatable.dart';
 
 sealed class ArticleState extends Equatable {
@@ -14,13 +14,13 @@ final class ArticleInitial extends ArticleState {}
 final class ArticleLoading extends ArticleState {}
 
 final class ArticleLoaded extends ArticleState {
-  final List<ArticleModel> articles;
+  final List<ArticleEntity> articles;
   final Failure? refreshFailure;
 
   const ArticleLoaded({required this.articles, this.refreshFailure});
 
   ArticleLoaded copyWith({
-    List<ArticleModel>? articles,
+    List<ArticleEntity>? articles,
     Failure? refreshFailure,
   }) {
     return ArticleLoaded(

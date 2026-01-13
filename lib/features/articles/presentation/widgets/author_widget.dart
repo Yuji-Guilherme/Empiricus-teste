@@ -1,11 +1,11 @@
 import 'package:empiricus_test/core/components/network_image.dart';
 import 'package:empiricus_test/core/theme/app_colors.dart';
 import 'package:empiricus_test/core/theme/app_typography.dart';
-import 'package:empiricus_test/features/articles/data/models/author_model.dart';
+import 'package:empiricus_test/features/articles/domain/entities/author_entity.dart';
 import 'package:flutter/material.dart';
 
 class AuthorWidget extends StatelessWidget {
-  final AuthorModel author;
+  final AuthorEntity author;
 
   const AuthorWidget({super.key, required this.author});
 

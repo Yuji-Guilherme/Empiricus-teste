@@ -1,6 +1,6 @@
-import 'package:empiricus_test/features/articles/data/models/article_model.dart';
+import 'package:empiricus_test/features/articles/domain/entities/article_entity.dart';
 
 abstract class IArticleRepository {
-  Future<List<ArticleModel>> getArticles();
-  Future<ArticleModel> getArticleBySlug(String slug);
+  Future<List<ArticleEntity>> getArticles();
+  Future<ArticleEntity> getArticleBySlug(String slug);
 }

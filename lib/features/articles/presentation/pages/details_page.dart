@@ -5,7 +5,7 @@ import 'package:empiricus_test/core/theme/app_colors.dart';
 import 'package:empiricus_test/core/theme/app_typography.dart';
 import 'package:empiricus_test/core/utils/app_alert.dart';
 import 'package:empiricus_test/core/utils/failure_extension.dart';
-import 'package:empiricus_test/features/articles/data/models/article_model.dart';
+import 'package:empiricus_test/features/articles/domain/entities/article_entity.dart';
 import 'package:empiricus_test/features/articles/presentation/bloc/detail_bloc.dart';
 import 'package:empiricus_test/features/articles/presentation/bloc/detail_event.dart';
 import 'package:empiricus_test/features/articles/presentation/bloc/detail_state.dart';
@@ -20,7 +20,7 @@ import 'package:go_router/go_router.dart';
 
 class DetailsPage extends StatelessWidget {
   final String slug;
-  final ArticleModel? article;
+  final ArticleEntity? article;
 
   const DetailsPage({super.key, required this.slug, this.article});
 
@@ -80,7 +80,7 @@ class DetailsPage extends StatelessWidget {
     );
   }
 
-  Widget _buildContent(ArticleModel article) {
+  Widget _buildContent(ArticleEntity article) {
     return SingleChildScrollView(
       padding: const .symmetric(horizontal: 20, vertical: 10),
       child: Column(
@@ -98,7 +98,7 @@ class DetailsPage extends StatelessWidget {
           Text(article.name, style: AppTypography.title),
           const SizedBox(height: 16),
           Hero(
-            tag: article.identifier.slug,
+            tag: article.slug,
             child: ClipRRect(
               borderRadius: .circular(6),
               child: AppNetworkImage(
