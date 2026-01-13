@@ -13,4 +13,4 @@ class MockAuthService extends Mock implements AuthService {}
 
 class MockFlutterSecureStorage extends Mock implements FlutterSecureStorage {}
 
-class MockHttpService extends Mock implements IHttpService {}
+class MockHttpAdapter extends Mock implements IHttpAdapter {}

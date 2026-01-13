@@ -6,11 +6,11 @@ import 'package:empiricus_test/features/articles/domain/entities/article_entity.
 import 'package:empiricus_test/features/articles/domain/repositories/article_repository.dart';
 
 class ArticleRepositoryImpl implements IArticleRepository {
-  final IHttpService _client;
+  final IHttpAdapter _client;
   final NetworkInfo _networkInfo;
 
   ArticleRepositoryImpl({
-    required IHttpService client,
+    required IHttpAdapter client,
     required NetworkInfo networkInfo,
   }) : _client = client,
        _networkInfo = networkInfo;

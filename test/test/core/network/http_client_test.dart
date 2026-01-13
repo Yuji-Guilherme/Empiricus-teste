@@ -5,18 +5,18 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:empiricus_test/core/errors/failures.dart';
-import 'package:empiricus_test/core/network/http_client.dart';
+import 'package:empiricus_test/core/network/http_service.dart';
 
 class MockClient extends Mock implements http.Client {}
 
 void main() {
-  late HttpServiceImpl httpClient;
+  late HttpAdapterImpl httpClient;
   late MockClient mockClient;
   const tBaseUrl = 'https://api.teste.com';
 
   setUp(() {
     mockClient = MockClient();
-    httpClient = HttpServiceImpl(client: mockClient, baseUrl: tBaseUrl);
+    httpClient = HttpAdapterImpl(client: mockClient, baseUrl: tBaseUrl);
 
     registerFallbackValue(Uri.parse(tBaseUrl));
   });
