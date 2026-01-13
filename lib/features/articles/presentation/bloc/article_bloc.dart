@@ -48,6 +48,8 @@ class ArticleBloc extends Bloc<ArticleEvent, ArticleState> {
       emit(currentState.copyWith(refreshFailure: failure));
     } catch (e) {
       emit(currentState.copyWith(refreshFailure: const UnknownFailure()));
+    } finally {
+      event.completer?.complete();
     }
   }
 

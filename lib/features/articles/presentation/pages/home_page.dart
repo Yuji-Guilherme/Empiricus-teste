@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:empiricus_test/core/components/app_bar.dart';
 import 'package:empiricus_test/core/di/service_locator.dart';
 import 'package:empiricus_test/core/services/auth_service.dart';
@@ -96,9 +98,11 @@ class HomePage extends StatelessWidget {
     return RefreshIndicator(
       color: AppColors.contrast,
       onRefresh: () async {
-        final bloc = context.read<ArticleBloc>();
-        bloc.add(RefreshArticles());
-        await bloc.stream.firstWhere((s) => s is! ArticleLoading);
+        final completer = Completer();
+
+        context.read<ArticleBloc>().add(RefreshArticles(completer: completer));
+
+        return completer.future;
       },
       child: ListView.separated(
         padding: const .all(16),
