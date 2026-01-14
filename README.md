@@ -18,9 +18,9 @@ O projeto cumpre **100% dos requisitos obrigatórios** e todos os requisitos **b
 
 - **Pull-to-Refresh:** Atualização da lista com estratégia **não-destrutiva** (mantém os dados antigos visíveis e em caso de erro notifica o usuário com snackbar).
 
-### ⭐️ Funcionalidades Bónus Implementadas
+### ⭐️ Funcionalidades Bônus Implementadas
 
-- **Splash Screen:** Tela de abertura com a logo + icone do aplicativo.
+- **Splash Screen:** Tela de abertura com a logo + ícone do aplicativo.
 
 <img src="https://github.com/user-attachments/assets/56e9925a-5303-4384-b4f7-d12306fa83cb" width="300">
 
@@ -37,7 +37,7 @@ O projeto cumpre **100% dos requisitos obrigatórios** e todos os requisitos **b
   </tr>
 </table>
 
-- **Suíte de Testes:** Cobertura de cenários críticos com Testes Unitários, de Widget e de Integração.
+- **suite de Testes:** Cobertura de cenários críticos com Testes Unitários, de Widget e de Integração.
 
 ---
 
@@ -160,7 +160,7 @@ Implementação de um `NavigatorObserver` personalizado (`SnackbarCleanerObserve
 ---
 
 ## 🧪 Estratégia de Testes 
-A suíte de testes foca nos riscos críticos da aplicação: 
+A suite de testes foca nos riscos críticos da aplicação: 
 
 1. **Unitários:** Validam a lógica pura nos BLoCs e o tratamento de dados nos Repositórios.
 2. **Widget (Integração de UI):** Validação de feedback visual (Loading, Error View, SnackBars) na `LoginPage`, `HomePage` e `DetailsPage`. 
