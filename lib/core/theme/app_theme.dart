@@ -1,0 +1,93 @@
+import 'package:empiricus_test/core/theme/app_typography.dart';
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'app_colors.dart';
+
+class AppTheme {
+  static ThemeData get lightTheme {
+    return ThemeData(
+      useMaterial3: true,
+
+      colorScheme: const ColorScheme(
+        brightness: .light,
+        primary: AppColors.primary,
+        onPrimary: Colors.white,
+        secondary: AppColors.contrast,
+        onSecondary: Colors.white,
+        surface: Colors.white,
+        onSurface: AppColors.text,
+        error: AppColors.error,
+        onError: Colors.white,
+        surfaceContainerLowest: AppColors.background,
+      ),
+
+      scaffoldBackgroundColor: AppColors.background,
+
+      textTheme: GoogleFonts.outfitTextTheme().apply(
+        bodyColor: AppColors.text,
+        displayColor: AppColors.text,
+        fontFamily: 'Outfit',
+      ),
+
+      inputDecorationTheme: InputDecorationTheme(
+        labelStyle: const TextStyle(color: AppColors.mediumGrey),
+        errorStyle: const TextStyle(fontSize: 12),
+
+        floatingLabelStyle: const TextStyle(
+          color: AppColors.contrast,
+          fontWeight: .w500,
+        ),
+
+        enabledBorder: OutlineInputBorder(
+          borderSide: const BorderSide(color: AppColors.lightGrey, width: 2),
+          borderRadius: .circular(4),
+        ),
+
+        focusedBorder: OutlineInputBorder(
+          borderSide: const BorderSide(color: AppColors.contrast, width: 2),
+          borderRadius: .circular(4),
+        ),
+
+        errorBorder: OutlineInputBorder(
+          borderSide: const BorderSide(color: AppColors.error),
+          borderRadius: .circular(4),
+        ),
+
+        focusedErrorBorder: OutlineInputBorder(
+          borderSide: const BorderSide(color: AppColors.error, width: 2),
+          borderRadius: .circular(4),
+        ),
+      ),
+
+      textSelectionTheme: const TextSelectionThemeData(
+        cursorColor: AppColors.contrast,
+        selectionColor: Colors.black12,
+        selectionHandleColor: AppColors.contrast,
+      ),
+
+      filledButtonTheme: FilledButtonThemeData(
+        style: FilledButton.styleFrom(
+          backgroundColor: AppColors.primary,
+          foregroundColor: Colors.white,
+          disabledBackgroundColor: AppColors.lightGrey,
+          disabledForegroundColor: AppColors.mediumGrey,
+          shape: RoundedRectangleBorder(borderRadius: .circular(4)),
+          textStyle: AppTypography.text,
+        ),
+      ),
+
+      appBarTheme: const AppBarTheme(
+        backgroundColor: AppColors.background,
+        elevation: 0,
+        scrolledUnderElevation: 0,
+        centerTitle: false,
+        iconTheme: IconThemeData(color: AppColors.text),
+        titleTextStyle: TextStyle(
+          color: AppColors.text,
+          fontSize: 20,
+          fontWeight: .bold,
+        ),
+      ),
+    );
+  }
+}
